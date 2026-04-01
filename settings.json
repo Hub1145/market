@@ -1,0 +1,33 @@
+{
+  "database": {
+    "url": "sqlite+aiosqlite:///./polymarket_alpha.db",
+    "pool_size": 5,
+    "max_overflow": 10
+  },
+  "polymarket": {
+    "api_key": "019d1431-e8b3-765a-8e61-39de10aec21e",
+    "api_secret": "ogCWonFCELgCTVjeCwqTijroMBfdcYZ9fQJ8cmeo1vA=",
+    "api_passphrase": "1e556b2382037f92f5d7c9217f2ef293119e88146f2611d3928bfbe87358da28",
+    "private_key": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "clob_api_url": "https://clob.polymarket.com",
+    "gamma_api_url": "https://gamma-api.polymarket.com"
+  },
+  "app": {
+    "log_level": "INFO",
+    "paper_mode": true,
+    "execution_enabled": false
+  },
+  "scoring": {
+    "min_trade_count": 10,
+    "clv_weight": 0.4,
+    "realized_edge_weight": 0.4,
+    "topic_specialist_bonus": 0.2
+  },
+  "strategy": "aggressive_whale",
+  "scan_interval": 1,
+  "paper_mode": true,
+  "min_edge": 0.2,
+  "trade_amount": 10,
+  "paper_balance": 1000,
+  "max_trades": 10
+}
