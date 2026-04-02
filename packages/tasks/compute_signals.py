@@ -103,7 +103,7 @@ async def refresh_market_signals(session: AsyncSession):
                 signal = await _build_external_signal(
                     session, market.id, market.question or "", "seismic"
                 )
-            elif any(kw in q_lower for kw in _WEATHER_KEYWORDS):
+            elif any(kw in q_lower for kw in _STRATEGY_KEYWORDS.get("laddering", [])):
                 signal = await _build_external_signal(
                     session, market.id, market.question or "", "laddering"
                 )

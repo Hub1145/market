@@ -105,10 +105,14 @@ async def _build_external_signal(
     source_label: str = ""
 
     if strategy == "seismic" or is_earthquake_market(market_q):
-        edge, ext_narrative = await compute_earthquake_alpha(market_q, "YES", yes_price)
+        _eq_result = await compute_earthquake_alpha(market_q, "YES", yes_price)
+        if isinstance(_eq_result, tuple):
+            edge, ext_narrative = _eq_result
         source_label = "seismic"
     if (edge == 0.0) and strategy in ("laddering", "disaster"):
-        edge, ext_narrative = await compute_weather_alpha(market_q, "YES", yes_price)
+        _wx_result = await compute_weather_alpha(market_q, "YES", yes_price)
+        if isinstance(_wx_result, tuple):
+            edge, ext_narrative = _wx_result
         source_label = "weather"
 
     if edge == 0.0:
@@ -319,7 +323,8 @@ async def aggregate_market_signals(
         if market_q:
             live_price = await _get_yes_price(session, market_id)
             yes_market_price = live_price if live_price is not None else 0.5
-            weather_edge = await compute_weather_alpha(market_q, "YES", yes_market_price) or 0.0
+            _wx = await compute_weather_alpha(market_q, "YES", yes_market_price)
+            weather_edge = _wx[0] if isinstance(_wx, tuple) else 0.0
 
     elif strategy == "black_swan":
         yes_market_price = await _get_yes_price(session, market_id)

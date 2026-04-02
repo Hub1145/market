@@ -3,12 +3,12 @@ import traceback
 from datetime import datetime, timedelta
 from typing import List
 
-from sqlalchemy import select
+from sqlalchemy import select, func as sqlfunc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from packages.ingestion.clients.polymarket_http import GammaClient
 from packages.ingestion.normalize.markets import normalize_gamma_event
-from packages.db.models.market import Event, Market, Outcome, MarketTag
+from packages.db.models.market import Market, Outcome, MarketTag
 from packages.db.models.price import PriceSnapshot
 
 logger = logging.getLogger(__name__)
@@ -33,6 +33,13 @@ class MarketService:
             all_price_data: List[dict] = []
 
             batch_size = 50
+            # Track (market_id, tag) pairs added in this session to avoid
+            # double-adds that cause the SAWarning identity-map collision.
+            # The Market.tags lazy="selectin" fires on session.merge(market)
+            # and reloads flushed rows, colliding with pending objects if the
+            # same tag was session.add()-ed earlier in the same batch.
+            seen_tags: set = set()
+
             for i, raw_event in enumerate(raw_events):
                 event, markets, outcomes, tags, price_data = normalize_gamma_event(raw_event)
 
@@ -60,6 +67,9 @@ class MarketService:
 
                 # Tags upsert
                 for tag in tags:
+                    tag_key = (tag.market_id, tag.tag)
+                    if tag_key in seen_tags:
+                        continue
                     existing_tag = (
                         await self.session.execute(
                             select(MarketTag)
@@ -70,12 +80,16 @@ class MarketService:
                     ).scalar_one_or_none()
                     if not existing_tag:
                         self.session.add(tag)
+                    seen_tags.add(tag_key)
 
                 all_price_data.extend(price_data)
 
                 # Commit every batch for immediate UI feedback
                 if (i + 1) % batch_size == 0:
                     await self.session.commit()
+                    # Clear seen set after commit — committed rows are now in DB
+                    # and will be found by the select() check in the next batch.
+                    seen_tags.clear()
                     logger.debug(f"Committed batch of {batch_size} events.")
 
             # Final commit for the remaining events
@@ -149,7 +163,11 @@ class MarketService:
                 existing.asset_id = outcome.asset_id
             else:
                 self.session.add(outcome)
+        seen_tags: set = set()
         for tag in tags:
+            tag_key = (tag.market_id, tag.tag)
+            if tag_key in seen_tags:
+                continue
             existing_tag = (
                 await self.session.execute(
                     select(MarketTag)
@@ -160,6 +178,7 @@ class MarketService:
             ).scalar_one_or_none()
             if not existing_tag:
                 self.session.add(tag)
+            seen_tags.add(tag_key)
         await self.session.commit()
 
         # Price snapshots
