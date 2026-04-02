@@ -1,6 +1,5 @@
 import asyncio
 import logging
-import os
 from typing import Dict, Any
 
 from fastapi import FastAPI, Request
@@ -223,6 +222,11 @@ async def handle_request_update(sid, *args, **kwargs):
 
 if __name__ == "__main__":
     import uvicorn
-    # Configure logging
     logging.basicConfig(level=logging.INFO)
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=5000,
+        proxy_headers=True,       # trust X-Forwarded-Proto from Render's proxy
+        forwarded_allow_ips="*",  # accept forwarded headers from any upstream IP
+    )
