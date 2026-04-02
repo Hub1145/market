@@ -1,9 +1,39 @@
+import base64
+import hashlib
+import hmac
 import logging
 import asyncio
+import time
 from typing import Any, Dict, List, Optional
 
 import httpx
 from packages.core.config import settings
+
+
+def _build_l2_headers(method: str, path: str) -> Dict[str, str]:
+    """Build Polymarket CLOB L2 HMAC auth headers from settings credentials."""
+    api_key        = settings.polymarket.api_key
+    api_secret     = settings.polymarket.api_secret
+    api_passphrase = settings.polymarket.api_passphrase
+    wallet_address = settings.polymarket.wallet_address  # derived from private_key
+    if not all([api_key, api_secret, api_passphrase, wallet_address]):
+        return {}
+    timestamp = str(int(time.time()))
+    message   = timestamp + method.upper() + path
+    try:
+        secret_bytes = base64.b64decode(api_secret)
+        sig = base64.b64encode(
+            hmac.new(secret_bytes, message.encode("utf-8"), hashlib.sha256).digest()
+        ).decode("utf-8")
+    except Exception:
+        return {}
+    return {
+        "POLY_ADDRESS":   wallet_address,
+        "POLY_SIGNATURE": sig,
+        "POLY_TIMESTAMP": timestamp,
+        "POLY_NONCE":     "0",
+        "Content-Type":   "application/json",
+    }
 
 try:
     from py_clob_client.client import ClobClient as OfficialClobClient
@@ -154,12 +184,15 @@ class ClobClient:
             except Exception as e:
                 logger.warning(f"Official client get_trades failed: {e}. Falling back to HTTP.")
 
-        # Attempt the authenticated /data/trades endpoint.
-        # Returns 401 without valid credentials — treat as empty (paper mode).
+        # Attempt the authenticated /data/trades endpoint with L2 HMAC headers.
+        # Falls back silently to empty list on 401/403 (no credentials configured).
         try:
+            path = f"/data/trades?asset_id={asset_id}&limit={limit}"
+            auth_headers = _build_l2_headers("GET", path)
             response = await self.http_client.get(
                 "/data/trades",
                 params={"asset_id": asset_id, "limit": limit},
+                headers=auth_headers,
             )
             if response.status_code in (401, 403, 404):
                 logger.debug(

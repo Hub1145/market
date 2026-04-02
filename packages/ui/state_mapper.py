@@ -1,12 +1,12 @@
 from typing import Any, Dict, List
 
-from sqlalchemy import select, func, case, desc
+from sqlalchemy import select, func, case
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from packages.core.config import settings
 from packages.db.models.market import Market, MarketTag, Outcome
 from packages.db.models.trade import Trade
-from packages.db.models.trader import TraderProfile, TraderClassification
+from packages.db.models.trader import TraderClassification
 from packages.db.models.position import PositionSnapshot, ClosedPosition
 from packages.db.models.scoring import MarketSignalSnapshot
 
@@ -146,16 +146,22 @@ async def map_db_to_bot_state(
                 .where(
                     Market.active == True,
                     Market.closed == False,
+                    Market.market_type == "binary",
                     func.lower(MarketTag.tag).in_(fallback_tags_lower),
                 )
                 .distinct()
+                .limit(100)
             )
-
         else:
             fallback_stmt = (
                 select(Market)
-                .where(Market.active == True, Market.closed == False)
-                .order_by(Market.id.desc()) # show newest first
+                .where(
+                    Market.active == True,
+                    Market.closed == False,
+                    Market.market_type == "binary",
+                )
+                .order_by(Market.id.desc())
+                .limit(100)
             )
 
         fallback_markets = (await session.execute(fallback_stmt)).scalars().all()

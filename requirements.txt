@@ -28,9 +28,8 @@ scipy>=1.12.0
 # Crypto / wallet (address derivation only)
 eth-account>=0.10.0
 
-# Polymarket SDK (optional - enables live CLOB trading and authenticated trade fetch)
-# pip install py-clob-client
-# py-clob-client>=0.18.0
+# Polymarket SDK — authenticated trade fetch and live CLOB trading
+py-clob-client>=0.18.0
 
 # Auth helpers (kept for future auth endpoints)
 python-jose[cryptography]>=3.3.0

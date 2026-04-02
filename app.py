@@ -63,42 +63,36 @@ async def background_workers_loop():
             if market_count == 0:
                 logger.info("Database empty on startup. Triggering initial market sync...")
                 await refresh_markets(session)
+                await refresh_market_signals(session)
     except Exception as e:
         logger.error(f"Startup sync failed: {e}")
 
     while True:
         try:
-            # Wake-up logic: wait for trading to start OR a force-sync trigger
+            # Check for a force-sync trigger (e.g. strategy change from UI)
             has_force_sync = _force_sync_event.is_set()
-            if not is_trading and not has_force_sync:
-                try:
-                    await asyncio.wait_for(_force_sync_event.wait(), timeout=2.0)
-                except asyncio.TimeoutError:
-                    pass
-                has_force_sync = _force_sync_event.is_set()
-                if not is_trading and not has_force_sync:
-                    continue
-            
-            # Clear the trigger if it was set
             _force_sync_event.clear()
-            
+
             global is_syncing
             is_syncing = True
-            logger.info(f"--- Sync Cycle Starting (ForceSync={has_force_sync}) ---")
-            
+            logger.info(f"--- Sync Cycle Starting (trading={is_trading}, force={has_force_sync}) ---")
+
             async with db_lock:
                 async with AsyncSessionLocal() as session:
-                    # 1. Market Refresh (Always done, priority tags used internally)
+                    # 1. Market + price refresh — always runs so Alpha Scan stays current
+                    #    regardless of whether the bot is started or stopped.
                     await refresh_markets(session)
-                    
-                    # 2. Detailed Data Refresh (Skipped on strategy-change to ensure 'immediate' signals)
-                    if not has_force_sync:
+
+                    # 2. Trade / profile refresh — only when bot is active or a
+                    #    strategy change was triggered (heavy; not needed in idle mode).
+                    if is_trading and not has_force_sync:
                         await refresh_trades(session)
                         await refresh_trader_profiles(session)
-                    else:
-                        logger.info("Strategy change detected: performing high-priority signal refresh...")
-                        
-                    # 3. Alpha Signal Generation (Always refreshed)
+                    elif has_force_sync:
+                        logger.info("Strategy change: high-priority signal refresh.")
+
+                    # 3. Alpha Signal Generation — always runs so scores are live
+                    #    in both start and stop mode.
                     await refresh_market_signals(session)
                 
             logger.info("--- Sync Cycle Complete ---")

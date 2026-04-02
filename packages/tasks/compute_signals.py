@@ -3,11 +3,10 @@ from datetime import datetime, timedelta
 from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from packages.core.config import settings
-from packages.db.models.market import Market, Outcome, MarketTag
+from packages.db.models.market import Market, MarketTag
 from packages.db.models.scoring import MarketSignalSnapshot
 from packages.scoring.market_aggregation import aggregate_market_signals, _build_external_signal
 from packages.scoring.strategies.earthquake_probability import is_earthquake_market
-from packages.scoring.strategies.weather_probability import compute_weather_alpha
 
 logger = logging.getLogger(__name__)
 
@@ -43,8 +42,12 @@ async def _get_markets_for_strategy(session: AsyncSession, strategy: str) -> lis
     tag_labels = _STRATEGY_TAG_FILTER.get(strategy, set())
     keywords   = _STRATEGY_KEYWORDS.get(strategy, [])
 
-    # Start with the basic presence filters
-    stmt = select(Market).where(Market.active == True, Market.closed == False)
+    # Start with the basic presence filters — binary markets only (YES/NO outcomes)
+    stmt = select(Market).where(
+        Market.active == True,
+        Market.closed == False,
+        Market.market_type == "binary",
+    )
     
     # Apply strategy-specific filters (Tags OR Keywords)
     if tag_labels or keywords:
