@@ -1,0 +1,2321 @@
+Created: 3/21/2026 14:15:39
+Updated: 3/21/2026 16:38:10
+Exported: 3/21/2026 18:05:54
+
+## Prompt:
+Yes. Here is a copy-paste-ready deep research prompt built for that exact idea.
+
+
+Deep Research Prompt
+
+
+Title: Identify High-Skill Polymarket Traders by Segment, Detect Topic-Specific Edge, and Find Potentially Undervalued Markets Based on Their Current Positioning
+
+
+Role
+
+
+You are a market-structure researcher, prediction-market analyst, behavioral data investigator, and quantitative trading strategist.
+
+
+Your task is to research whether there is a usable edge in tracking Polymarket participants with unusually high realized win rates, especially:
+
+
+overall high-win-rate traders
+
+high-win-rate traders within specific domains or topic clusters
+
+what those traders are currently betting on
+
+whether the markets they are entering appear undervalued relative to:
+
+
+current market-implied probability
+
+
+consensus positioning
+
+
+price movement history
+
+
+public information environment
+
+
+the behavior of other strong traders
+
+
+Core Objective
+
+
+Determine whether one can construct a systematic framework that does the following:
+
+
+identify whales and non-whales on Polymarket with unusually strong historical performance
+
+separate true skill from noise, luck, small sample effects, and event selection bias
+
+identify traders with domain-specific edge rather than only overall strong performance
+
+track what those traders are betting on now
+
+identify cases where strong traders are entering or concentrating into markets that still appear mispriced or underreacted
+
+determine whether this can support a repeatable alpha strategy rather than anecdotal copying
+
+
+Main Research Questions
+
+
+A. Trader Identification
+
+
+How can Polymarket users be identified and linked across wallets, accounts, or visible on-chain behavior?
+
+What public data exists on:
+
+
+wallet activity
+
+
+trade history
+
+
+realized PnL
+
+
+ROI
+
+
+market participation
+
+
+market timing
+
+
+bet sizing
+
+
+holding period
+
+
+entry and exit behavior
+
+
+Can traders be segmented into:
+
+
+whales
+
+
+mid-size serious traders
+
+
+small but high-skill traders
+
+
+market makers or liquidity-style accounts
+
+
+noise traders
+
+
+copycat traders
+
+
+B. Skill Measurement
+
+
+What is the best way to measure “high win rate” without being fooled by:
+
+
+small number of bets
+
+
+buying only near resolution
+
+
+taking trivial favorites
+
+
+selection into easy markets
+
+
+correlated bets
+
+
+survivorship bias
+
+
+Which metrics are most meaningful:
+
+
+raw win rate
+
+
+risk-adjusted return
+
+
+average closing edge versus entry price
+
+
+calibration
+
+
+Brier-style scoring
+
+
+log score
+
+
+expected value captured
+
+
+realized PnL
+
+
+Sharpe-like or drawdown-adjusted measures
+
+
+What sample size thresholds are needed before treating a trader as plausibly skilled?
+
+How should whale size be handled separately from predictive skill?
+
+
+C. Topic-Specific Edge
+
+
+Can markets be grouped into domains such as:
+
+
+US politics
+
+
+international politics
+
+
+macro
+
+
+crypto
+
+
+sports
+
+
+entertainment
+
+
+science/tech
+
+
+geopolitical conflict
+
+
+law/courts
+
+
+elections by country
+
+
+Which traders appear strongest in specific domains rather than globally?
+
+Are some traders consistently early and correct in one niche but mediocre elsewhere?
+
+Can trader edge be decomposed by:
+
+
+topic
+
+
+time horizon
+
+
+market type
+
+
+volatility regime
+
+
+event structure
+
+
+binary versus multi-outcome markets
+
+
+D. Current Bet Tracking
+
+
+Which currently active markets are being entered by:
+
+
+highest overall skill traders
+
+
+highest domain-specific skill traders
+
+
+whales with evidence of skill
+
+
+non-whales with evidence of skill
+
+
+Are these traders entering early, averaging in, scaling up, or reacting late?
+
+Are multiple strong traders converging on the same market?
+
+Are there cases where:
+
+
+strong traders are buying while public sentiment lags
+
+
+strong traders are concentrated in one side while price still looks cheap
+
+
+strong traders are early relative to later market repricing
+
+
+E. Undervaluation Detection
+
+
+How should “undervalued” be defined in this setting? Possible definitions to test:
+
+
+strong traders buying outcomes with implied probability below model-estimated fair value
+
+
+strong-trader concentration before major price move
+
+
+high-skill accumulation in thin or neglected markets
+
+
+disagreement between strong-trader flow and crowd flow
+
+
+disagreement between price and exogenous information
+
+
+Can one build a ranking model for candidate undervalued bets based on:
+
+
+number of strong traders involved
+
+
+strength of those traders
+
+
+domain relevance of their past edge
+
+
+size and persistence of their position
+
+
+market liquidity
+
+
+spread
+
+
+time to resolution
+
+
+current implied odds
+
+
+recent drift
+
+
+catalyst structure
+
+
+Does following these traders produce alpha after accounting for slippage, timing lag, and visibility delay?
+
+
+Required Deliverables
+
+
+Produce the output in the following structure.
+
+
+Section 1. Executive Conclusion
+
+
+Give a direct answer to the main question: Is this idea likely to work, under what conditions, and where are the main failure points?
+
+
+State clearly:
+
+
+whether the edge seems plausible
+
+
+whether it is likely to be weak, moderate, or strong
+
+
+whether it is likely to be scalable
+
+
+whether it is likely to decay quickly once systematized
+
+
+Section 2. Data Map
+
+
+List all data sources that could support this research, including:
+
+
+Polymarket public interfaces
+
+
+blockchain data
+
+
+wallet-level activity
+
+
+third-party dashboards
+
+
+Dune dashboards if available
+
+
+Flipside or other analytics platforms if relevant
+
+
+APIs
+
+
+scraping targets
+
+
+leaderboards
+
+
+research threads
+
+
+public trader trackers
+
+
+GitHub tools
+
+
+academic work on prediction markets or social trading
+
+
+For each source, state:
+
+
+what it contains
+
+
+whether it is historical or live
+
+
+whether it is wallet-level or market-level
+
+
+quality limitations
+
+
+whether it is easy or hard to extract
+
+
+Section 3. Trader Scoring Framework
+
+
+Design a robust framework for ranking Polymarket traders by likely predictive skill.
+
+
+This must include:
+
+
+raw performance metrics
+
+
+normalized performance metrics
+
+
+minimum sample thresholds
+
+
+shrinkage methods for small samples
+
+
+adjustments for odds difficulty
+
+
+adjustments for late entries
+
+
+risk-adjustment ideas
+
+
+methods to separate skill from luck
+
+
+Explicitly distinguish:
+
+
+whale status
+
+
+profitability
+
+
+predictive accuracy
+
+
+market timing skill
+
+
+topic specialization
+
+
+Section 4. Whale vs Non-Whale Framework
+
+
+Define operationally:
+
+
+whale
+
+
+non-whale
+
+
+serious non-whale
+
+
+noise account
+
+
+Then compare:
+
+
+whether whales actually outperform
+
+
+whether smaller specialized traders may have better signal quality
+
+
+whether whales move price too much to be copied efficiently
+
+
+whether non-whales may provide cleaner early signals
+
+
+Section 5. Topic-Specific Edge Detection
+
+
+Build a method for identifying traders with edge in specific categories.
+
+
+Include:
+
+
+topic taxonomy
+
+
+tagging logic for markets
+
+
+sample-size rules per category
+
+
+category-specific scorecards
+
+
+how to prevent overfitting to narrow niches
+
+
+how to rank “best trader in topic X”
+
+
+Section 6. Current Opportunity Detection Framework
+
+
+Design a framework for finding current candidate bets based on strong trader activity.
+
+
+This should include:
+
+
+how to detect active positions
+
+
+how to infer conviction
+
+
+how to detect accumulation
+
+
+how to identify convergence among strong traders
+
+
+how to compare current pricing to historical strong-trader behavior
+
+
+how to flag potentially undervalued markets
+
+
+Give a concrete scoring formula or pseudocode-style ranking logic.
+
+
+Section 7. Backtesting Design
+
+
+Design a rigorous backtest for the strategy.
+
+
+The backtest must test variants such as:
+
+
+copy top overall traders
+
+
+copy top whales only
+
+
+copy top non-whales only
+
+
+copy topic specialists only within their domain
+
+
+copy only when multiple strong traders converge
+
+
+copy only when price still remains below a threshold
+
+
+copy only early entries
+
+
+copy with lag
+
+
+For each variant, specify:
+
+
+entry rule
+
+
+exit rule
+
+
+holding period
+
+
+transaction assumptions
+
+
+slippage assumptions
+
+
+liquidity constraints
+
+
+resolution handling
+
+
+Also require tests for:
+
+
+out-of-sample robustness
+
+
+rolling windows
+
+
+regime changes
+
+
+overfitting
+
+
+strategy decay
+
+
+Section 8. Failure Modes
+
+
+List all major failure modes, including:
+
+
+public visibility lag
+
+
+hidden or split wallets
+
+
+false positives from lucky traders
+
+
+sample-size illusions
+
+
+whales trading for hedging rather than edge
+
+
+market manipulation
+
+
+liquidity distortion
+
+
+inability to infer full position state
+
+
+copying after price move
+
+
+topic misclassification
+
+
+edge disappearing after discovery
+
+
+Section 9. Implementation Blueprint
+
+
+Give a practical plan for building this into a system.
+
+
+Include:
+
+
+ingestion architecture
+
+
+entity resolution for wallets
+
+
+historical storage schema
+
+
+trader scoring pipeline
+
+
+topic classification pipeline
+
+
+live signal engine
+
+
+undervaluation ranking engine
+
+
+dashboard outputs
+
+
+alerting logic
+
+
+Provide suggested stack options, for example:
+
+
+Python
+
+
+SQL/Postgres
+
+
+DuckDB
+
+
+Dune API
+
+
+Polymarket API or scraping
+
+
+wallet graph tools
+
+
+dashboard layer
+
+
+Section 10. Priority Research Outputs
+
+
+At the end, produce these concrete outputs:
+
+
+a ranked list of the strongest apparent Polymarket traders overall
+
+a ranked list of strongest traders by topic
+
+a comparison of whales versus non-whales
+
+a shortlist of currently active markets where strong traders appear concentrated
+
+a shortlist of currently active markets that may be undervalued according to the defined framework
+
+a judgment on whether the strategy is actually actionable
+
+
+Methodological Requirements
+
+
+Be skeptical. Do not assume high win rate means skill.
+
+Separate:
+
+
+luck
+
+
+sample size
+
+
+odds selection
+
+
+timing advantage
+
+
+true informational edge
+
+
+Prefer quantitative evaluation over anecdotes.
+
+Treat trader copying as a signal-extraction problem, not hero worship.
+
+Explicitly note where data is missing or inference is weak.
+
+Distinguish observed positions from inferred conviction.
+
+Where possible, compare trader entry prices to later market prices and final resolution.
+
+If direct trader-level data is incomplete, propose proxy methods and rank them by reliability.
+
+When relevant, compare this problem to:
+
+
+social trading
+
+
+copy trading
+
+
+betting syndicate tracking
+
+
+on-chain smart money tracking
+
+
+prediction market microstructure research
+
+
+Prioritize methods that could actually be implemented into a repeatable strategy.
+
+
+Suggested Analytical Angles
+
+
+Investigate whether the best signal may actually come from one of these:
+
+
+small but highly specialized traders
+
+
+traders who are not whales but repeatedly win in one niche
+
+
+traders who enter before price repricing rather than simply being correct near the end
+
+
+clusters of independent strong traders landing on the same side
+
+
+divergence between strong-trader flow and retail/public flow
+
+
+markets with low attention where specialist traders dominate price discovery
+
+
+Preferred Output Style
+
+
+Use a hedge-fund-quality research memo format.
+
+
+Include:
+
+
+tables
+
+
+ranking frameworks
+
+
+formulas
+
+
+pseudocode where useful
+
+
+explicit assumptions
+
+
+confidence levels
+
+
+a final go / no-go judgment on the idea
+
+
+Add a final section titled:
+
+
+“Minimum Viable Alpha Version”
+
+
+In that section, specify the simplest version of the strategy that could be tested first with minimal engineering effort.
+
+
+Optional Add-On Section
+
+
+If possible, add:
+
+
+“Best Variants of the Idea”
+
+
+Compare:
+
+
+copying whales
+
+
+copying non-whales
+
+
+copying topic specialists
+
+
+copying only convergent strong traders
+
+
+copying only early conviction trades
+
+
+copying only when strong trader activity disagrees with current market pricing
+
+
+And rank which variant appears most promising.
+
+
+Condensed version
+
+
+If you want, here is a tighter version for models that perform better with less instruction:
+
+
+Research whether Polymarket trader tracking can generate alpha by identifying whales and non-whales with high historical win rates, separating real skill from luck, detecting domain-specific edge, tracking what those traders are currently betting on, and finding markets where strong-trader activity suggests undervaluation relative to current implied probability. Build a framework for ranking traders overall and by topic, comparing whales versus non-whales, identifying current candidate bets, and testing whether copying strong traders would have worked historically after accounting for timing, slippage, liquidity, and visibility lag. Output a rigorous research memo, scoring framework, backtest design, failure analysis, implementation blueprint, and a final judgment on whether this idea is actionable.
+
+
+A stronger variant
+
+
+One improvement would be to extend the prompt so it does not rely only on win rate, because raw win rate is often the wrong metric in prediction markets.
+
+
+You may want the system to emphasize:
+
+
+closing line value style edge
+
+
+entry-before-repricing skill
+
+
+expected value captured
+
+
+topic-specific forecasting skill
+
+
+signal quality of trades before public news diffusion
+
+
+That version would usually be better than a win-rate-heavy version.
+
+## Response:
+
+
+## Prompt:
+You are a quantitative researcher specializing in prediction markets, market microstructure, probabilistic forecasting, behavioral signal extraction, Bayesian inference, and backtesting.
+Your task is to determine whether Polymarket trader-level behavior can be converted into a statistically defensible alpha signal.
+The focus is not merely on identifying users with high raw win rates. The focus is to construct a rigorous framework for:
+identifying traders with evidence of real predictive skill
+separating skill from luck, sample bias, and market-selection effects
+measuring whether traders have edge globally or only within specific topic domains
+tracking current activity of strong traders
+testing whether current positioning by strong traders identifies undervalued bets
+evaluating whether a copy-trading or signal-following strategy is economically actionable after realistic frictions
+Core Research Objective
+Determine whether there exists a repeatable and statistically credible strategy based on observing Polymarket traders with:
+strong historical predictive performance
+strong entry timing
+strong domain-specific edge
+repeatable positive expected value capture
+persistent ability to enter before repricing
+Then determine whether their current activity can be used to identify markets whose current prices understate true probability.
+Research Questions
+A. Trader-Level Data and Reconstruction
+What trader-level public data can be observed or reconstructed from Polymarket and associated on-chain activity?
+What is the best available mapping between:
+wallet
+user identity or label
+trade sequence
+market participation history
+realized profit and loss
+current open positions
+What data gaps prevent clean reconstruction of:
+full position size
+average entry price
+realized versus unrealized profit
+true hold duration
+whether a wallet is discretionary, systematic, hedging, or copied
+B. Skill Estimation
+What metrics best estimate true predictive skill?
+ Do not rely only on raw win rate.
+ Evaluate and compare:
+raw win rate
+odds-adjusted win rate
+return on capital
+return on risk
+realized expected value capture
+average entry edge versus later market price
+price improvement before repricing
+calibration
+Brier score
+log score
+profit relative to implied odds
+alpha relative to naive baselines
+topic-conditional performance
+How should the following distortions be corrected for?
+small samples
+survivor bias
+favorite-longshot bias
+very late entries near resolution
+correlated positions across linked markets
+concentration in easy markets
+copy-trading behavior
+capital constraints
+market impact
+What statistical methods should be used to estimate skill robustly?
+ Possible methods to consider:
+empirical Bayes shrinkage
+hierarchical Bayesian models
+beta-binomial or binomial shrinkage for win rates
+logistic mixed-effects models
+bootstrap confidence intervals
+false discovery control across many traders
+out-of-sample validation
+rolling-window estimation
+permutation tests
+posterior ranking under uncertainty
+C. Topic-Specific Edge
+Can traders be assigned to topic domains such as:
+US politics
+international politics
+macro
+crypto
+sports
+entertainment
+tech
+science
+legal/court
+elections by geography
+conflict/geopolitics
+For each trader, estimate:
+global skill
+topic-level skill
+topic-level confidence
+persistence over time
+whether their edge survives shrinkage and out-of-sample testing
+Are some traders:
+mediocre overall but strong in one niche
+strong only at certain time horizons
+strong only in volatile or neglected markets
+strong at early entry but not necessarily at final forecasting accuracy
+D. Current Signal Extraction
+Which currently active markets are being entered by:
+top global traders
+top topic specialists
+top whales with evidence of skill
+top non-whales with evidence of skill
+For those current markets, quantify:
+number of strong traders active
+weighted skill of participating traders
+topic relevance of each trader’s historical edge
+size proxy or conviction proxy
+recency of entry
+accumulation pattern
+whether entry preceded price movement
+whether multiple independent strong traders are converging
+E. Undervaluation Detection
+Define undervaluation quantitatively.
+ Possible definitions to test:
+current market price is below model-implied fair probability after conditioning on strong-trader participation
+strong traders are entering before subsequent repricing
+current price underreacts to informed flow from historically skilled participants
+strong-trader participation predicts future price movement or resolution better than current market odds alone
+Construct and compare models such as:
+logistic model predicting resolution from market price alone
+logistic model predicting resolution from market price plus strong-trader features
+future-price-move model using strong-trader participation
+hazard or event-time model for repricing after strong-trader entry
+residual mispricing model where undervaluation is defined as positive residual expected value after trader-signal adjustment
+Required Deliverables
+Section 1. Direct Conclusion
+Answer clearly:
+Is there evidence that Polymarket trader tracking can produce alpha?
+Is raw win rate sufficient? If not, what replaces it?
+Is the likely signal stronger in whales, non-whales, or topic specialists?
+Is the edge more likely to come from final outcome prediction or earlier repricing detection?
+Is the strategy likely to survive realistic execution frictions?
+Section 2. Data Inventory
+List all relevant data sources and what each contributes:
+Polymarket APIs
+market pages
+orderbook or trade data if accessible
+blockchain transaction data
+Dune dashboards
+Flipside or similar
+third-party trader trackers
+GitHub tooling
+academic or practitioner literature on prediction-market efficiency and copy-trading
+For each source specify:
+fields available
+time coverage
+granularity
+reliability
+extraction difficulty
+known blind spots
+Section 3. Formal Trader Skill Model
+Define a formal framework for estimating trader skill.
+At minimum include:
+notation
+observed variables
+latent skill concept
+shrinkage framework
+minimum sample rule
+adjustments for odds difficulty
+adjustments for trade timing
+uncertainty intervals
+ranking under uncertainty
+Require explicit formulas.
+Examples of objects to define:
+market m
+trader i
+side s
+entry price p_im
+closing or later price c_im
+resolution y_m
+topic t(m)
+stake proxy w_im
+time-to-resolution tau_im
+Then define candidate statistics such as:
+edge_im = c_im - p_im
+realized_value_im = y_m - p_im for yes-side style normalization
+topic_skill_i,t
+shrunk_skill_i
+early_entry_score_i
+convergence_score_m
+Section 4. Trader Segmentation
+Define and compare:
+whale
+mid-size
+serious non-whale
+market maker style account
+noise trader
+copier
+Provide operational rules for classification.
+Section 5. Topic-Specific Inference
+Construct a domain-specific framework for measuring conditional edge.
+This must include:
+taxonomy design
+minimum observations per topic
+partial pooling across topics
+guardrails against overfitting
+ranking by posterior expected skill and confidence
+Section 6. Current Market Signal Model
+Design a model that scores current markets based on strong-trader activity.
+Include a proposed formula such as:
+Signal(m) =
+ a1 * weighted_global_skill
+a2 * weighted_topic_skill
+a3 * trader_convergence
+a4 * early_entry_strength
+a5 * conviction_proxy
+a6 * liquidity_penalty
+a7 * visibility_lag_penalty
+a8 * crowding_penalty
+Define each term precisely.
+Section 7. Backtesting Protocol
+Design a rigorous backtest with:
+train / validation / test periods
+rolling windows
+out-of-sample ranking
+realistic signal delay
+entry lag
+slippage
+liquidity filters
+capital constraints
+turnover analysis
+sensitivity analysis
+Test the following strategies:
+follow top global traders
+follow top topic specialists only in-domain
+follow whales only
+follow non-whales only
+follow only convergent signals
+follow only early-entry signals
+follow only trades with residual undervaluation after trader-signal adjustment
+For each strategy, report:
+CAGR-style equivalent if applicable
+hit rate
+expected value
+Sharpe-like metric if meaningful
+max drawdown
+turnover
+capacity
+stability across subperiods
+Section 8. Statistical Validation
+Require:
+confidence intervals
+multiple-testing correction
+placebo strategies
+random-trader baselines
+market-price-only baseline
+late-entry baseline
+momentum baseline
+ablation study on trader features
+Section 9. Failure Modes
+Analyze:
+false discovery of skilled traders
+hidden wallet fragmentation
+price impact from whales
+copied signals arriving too late
+topic-labeling error
+overfitting
+non-stationarity
+strategic behavior changes
+adverse selection in visible trades
+inability to infer true full positions
+Section 10. Final Research Judgment
+Provide:
+strongest evidence in favor
+strongest evidence against
+whether this is likely a real edge
+whether it is mostly a research artifact
+whether it is implementable in practice
+what the minimum viable version should be
+Methodological Constraints
+Do not equate profitability with forecasting skill.
+Do not equate raw win rate with edge.
+Treat uncertainty explicitly.
+Prefer parsimonious, testable models.
+Use out-of-sample performance as the main standard.
+Separate prediction of resolution from prediction of near-term repricing.
+Clearly distinguish inference from direct observation.
+Rank hypotheses by evidential strength.
+Preferred Output Style
+Write as a quantitative research memo.
+ Use:
+formulas
+tables
+ranked hypotheses
+statistical tests
+explicit assumptions
+confidence labels
+concise final verdict
+Final Required Add-On
+End with a section titled:
+Minimum Viable Quant Strategy
+In that section, specify the simplest statistically defensible version of the idea that could be tested first with limited engineering and limited data.
+
+## Response:
+
+
+## Prompt:
+Title:
+ Find Currently Undervalued Polymarket Bets by Tracking High-Skill Traders and Topic Specialists
+Role
+You are a real-time prediction-market signal researcher and special situations analyst.
+Your task is not mainly to study Polymarket historically in the abstract.
+ Your task is to identify current markets where trader behavior suggests the market may still be underpricing an outcome.
+The key idea is:
+identify traders with strong evidence of skill
+identify traders with strong evidence of skill in specific topics
+observe what they are betting on right now
+detect markets where their activity suggests current prices may be too low relative to true probability
+Core Objective
+Produce a framework for ranking live Polymarket opportunities by the probability that they are currently undervalued because strong traders are buying them before full repricing.
+Main Questions
+Which Polymarket traders currently appear most credible as signal sources?
+Which of them appear strongest overall?
+Which appear strongest in particular domains?
+Which markets are they buying or accumulating in right now?
+Which of those markets still appear cheap despite their participation?
+Which current bets appear best if the goal is to exploit mispricing before the rest of the market fully updates?
+Research Priorities
+This version should prioritize current usefulness over long historical theory.
+That means the analysis should focus on:
+live or recent trader activity
+current open markets
+trader convergence
+early accumulation
+domain match between trader expertise and market topic
+whether price has fully reacted yet
+whether the market is still copyable at current odds
+Required Framework
+Section 1. Signal Source Selection
+Define a practical method for selecting strong traders to follow right now.
+Split them into:
+strong overall traders
+strong topic specialists
+whales with plausible skill
+non-whales with plausible skill
+For each trader selected, report:
+why they qualify
+how much evidence supports their skill
+whether their signal is overall or topic-specific
+whether they tend to enter early or late
+whether they are likely still useful to copy
+Section 2. Live Market Scanning Logic
+Define how to scan current Polymarket markets for candidate opportunities.
+For each active market, evaluate:
+whether strong traders are active
+how many strong traders are active
+whether they are on the same side
+whether they are topic-matched specialists
+whether they are whales or non-whales
+whether they entered recently
+whether price has already moved
+whether the market remains liquid enough to enter
+whether the opportunity still exists after their move
+Section 3. Undervaluation Definition
+Define undervaluation specifically for live use.
+Possible operational definitions:
+strong traders are buying at prices that still look low relative to their historical signal quality
+multiple skilled traders are converging while price has not yet repriced much
+topic specialists are active in-domain and current implied probability still looks too low
+strong-trader participation predicts near-term price increase from current level
+strong-trader activity implies market odds are stale or underreactive
+Require the model to compare multiple operational definitions and choose the most practical one.
+Section 4. Live Ranking Model
+Design a current-bet ranking system.
+The output should rank active markets using a score such as:
+CurrentOpportunityScore(m) =
+ b1 * strong_trader_count
+b2 * weighted_global_skill
+b3 * weighted_topic_skill
+b4 * topic_match_quality
+b5 * convergence_strength
+b6 * early_entry_signal
+b7 * conviction_proxy
+b8 * neglect_bonus
+b9 * already_repriced_penalty
+b10 * illiquidity_penalty
+b11 * execution_delay_penalty
+b12 * crowding_penalty
+Define each term concretely and explain how to calculate it from available data.
+Section 5. Trader-Convergence Framework
+Construct a framework for detecting when a current market is especially interesting because:
+several strong traders are on the same side
+they are independent rather than obvious copiers
+they are strong specifically in this domain
+they entered before broad market movement
+they are adding rather than exiting
+This section should determine whether convergence is stronger than any single-trader signal.
+Section 6. Topic-Matching Logic
+For each current market, determine whether the traders entering it have demonstrated skill in that exact domain or in a closely related one.
+Examples:
+US election traders in US election markets
+crypto traders in crypto-regulation or token-related markets
+sports specialists in sports markets
+geopolitical specialists in conflict-related markets
+Require the analysis to weight in-domain specialist signals more heavily than generic high-win-rate signals.
+Section 7. Current Market Shortlist
+Produce a ranked shortlist of current markets that appear most interesting under this framework.
+For each shortlisted market, include:
+current market and side
+current implied probability
+which strong traders are involved
+whether they are whales or non-whales
+whether they are overall strong or topic specialists
+why the market may still be undervalued
+what could invalidate the thesis
+whether the opportunity seems early, mid, or already late
+Section 8. Copyability Test
+For each shortlisted market, evaluate:
+whether the price has already moved too much
+whether a follower could still enter at acceptable odds
+how much slippage or liquidity risk matters
+whether the signal was visible early enough
+whether the trade is likely too crowded to remain attractive
+Section 9. Practical Output
+At the end, produce these exact outputs:
+Top traders worth following right now
+Top topic specialists worth following right now
+Current markets with strongest strong-trader convergence
+Current markets that still appear undervalued after accounting for observed trader activity
+Best current bets by:
+whale-following
+non-whale-following
+topic-specialist-following
+convergence-following
+Markets that look attractive at first glance but are probably already too repriced to copy
+Section 10. Fastest Actionable Version
+End with a section titled:
+Fastest Actionable Version
+This section must specify the simplest real-time approach that could be used immediately, even with imperfect data.
+For example:
+follow only top topic specialists
+require at least two strong traders on the same side
+require limited price movement since first visible entry
+ignore markets below a liquidity threshold
+only surface markets where current odds remain below a defined threshold
+Method Constraints
+Focus on actionability.
+Do not spend too much space on abstract theory unless it improves current market ranking.
+Do not rely on raw win rate alone.
+Downweight traders with weak sample size.
+Downweight signals that are already stale.
+Emphasize whether a market is still copyable now.
+Distinguish clearly between:
+evidence of skill
+evidence of conviction
+evidence of undervaluation
+If current data is incomplete, propose the best proxy framework rather than stopping.
+Preferred Output Style
+Write as a live opportunities memo for a trader.
+Use:
+ranked lists
+scorecards
+tables
+explicit signal logic
+concrete current-market shortlists
+confidence levels
+direct final verdicts
+Compact version 
+Research Polymarket traders to identify the strongest overall and topic-specific signal sources, then scan current active markets to find cases where those traders are betting in ways that suggest the market is still undervaluing an outcome. Prioritize live usefulness: rank current markets by strong-trader convergence, topic-match quality, early-entry signal, and whether current prices remain copyable after visible trader activity. Output a practical shortlist of current bets, the traders driving the signal, and a judgment on whether each opportunity is still early enough to act on.
+
+## Response:
+
+
+## Prompt:
+Deep Research Prompt
+Title:
+Find Existing Repositories, Tools, APIs, Dashboards, and Open-Source Infrastructure That Can Be Used or Modified to Build a Polymarket Smart-Money / Skilled-Trader / Undervalued-Bet Detection System
+Role
+You are an open-source intelligence researcher, quantitative infrastructure analyst, prediction-market systems researcher, and technical due diligence specialist.
+Your task is to identify all existing technical infrastructure that could help build a system for:
+identifying Polymarket traders with evidence of real skill
+separating whales from non-whales
+detecting topic-specific trader edge
+tracking what strong traders are currently betting on
+finding current markets where strong-trader positioning may indicate undervaluation
+building either a research pipeline, live monitoring system, dashboard, or trading intelligence platform around this idea
+Core Objective
+Find the best existing repos, tools, APIs, dashboards, scripts, indexers, analytics frameworks, and adjacent open-source systems that could be:
+used directly
+lightly modified
+heavily adapted
+forked into a custom system
+used only as reference architecture
+combined into a larger end-to-end stack
+The goal is not to reinvent everything from scratch if useful building blocks already exist.
+Primary Research Questions
+A. Direct Polymarket Infrastructure
+What official and unofficial tools exist specifically for Polymarket?
+Are there:
+official APIs
+SDKs
+subgraphs
+market data clients
+trade history tools
+wallet trackers
+scraper repos
+orderbook clients
+CLob clients
+websocket listeners
+market-making bots
+analytics dashboards
+trader leaderboards
+Dune dashboards
+export tools
+Telegram or Discord bots
+browser extensions
+Which of these expose:
+market metadata
+live prices
+trade history
+wallet activity
+positions
+liquidity
+order flow
+market resolution data
+event/category labels
+user or wallet labels
+B. Adjacent Prediction Market Infrastructure
+What repos or tools exist for:
+Kalshi
+Manifold
+Augur
+PredictIt
+historical betting exchanges
+sports betting sharp-money tracking
+prediction market data science
+that could be adapted to Polymarket even if not built for it?
+Are there academic or hobbyist codebases for:
+forecast scoring
+prediction-market calibration analysis
+event market backtesting
+trader ranking
+closing-line-value style analysis
+probabilistic market efficiency testing
+copy-trading research
+market microstructure modeling
+C. On-Chain and Wallet Analytics Infrastructure
+What open-source tools exist for:
+wallet clustering
+address labeling
+entity resolution
+transaction graph analysis
+whale tracking
+smart-money detection
+token flow monitoring
+position reconstruction from on-chain events
+Which Ethereum / Polygon / EVM analytics tools could help track Polymarket participants?
+What Dune, Flipside, or SQL-based dashboards already exist for prediction markets or Polymarket wallets?
+D. Live Monitoring and Signal Systems
+What repos or tools could be adapted for:
+real-time event ingestion
+websocket market monitoring
+signal generation
+alerting
+ranking live opportunities
+position-change detection
+anomaly detection
+dashboarding
+What crypto “smart money tracker” tools could be repurposed for prediction markets?
+E. Research / Backtesting Infrastructure
+What repos or frameworks could help with:
+historical ingestion
+market replay
+backtesting copy-trading strategies
+feature engineering
+ranking models
+Bayesian skill estimation
+topic classification
+evaluation of probabilistic forecasts
+What general-purpose repos exist for:
+event-driven backtesting
+stream processing
+time-series feature stores
+entity graphs
+probabilistic scoring pipelines
+that would reduce build time?
+F. UI / Dashboard / Ops Infrastructure
+What repos or starter kits exist for:
+trader dashboards
+market intelligence dashboards
+leaderboard interfaces
+realtime ranking tables
+alerts and watchlists
+admin panels
+analyst workflows
+Which can be reused for an MVP versus which are only useful as inspiration?
+Required Deliverables
+Section 1. Executive Summary
+Answer directly:
+Are there already enough tools and repos to build this without starting from zero?
+Which parts of the stack already seem well-covered?
+Which parts still appear missing and would likely need custom code?
+Is the main bottleneck data access, analytics, wallet/entity resolution, or live signal logic?
+Section 2. Master Inventory of Relevant Repos and Tools
+Produce a structured inventory of all relevant assets found.
+For each item, include:
+name
+link
+type
+repo
+SDK
+API
+dashboard
+data source
+research notebook
+analytics tool
+bot
+indexer
+library
+whether it is Polymarket-native or adjacent
+main functionality
+language / stack
+maintenance status
+stars / usage signals if available
+whether it appears production-usable or only illustrative
+whether it is directly reusable, modifiable, or mainly conceptual
+Section 3. Classification by Build Layer
+Organize all findings by system layer:
+data acquisition
+live market ingestion
+wallet/trader reconstruction
+analytics / scoring
+topic classification
+backtesting
+real-time signal generation
+dashboard / UI
+alerting / automation
+deployment / infra
+For each layer, identify:
+strongest existing tools
+easiest tools to reuse
+most extensible tools
+largest gaps
+Section 4. Best Polymarket-Specific Assets
+Identify the best assets built specifically for Polymarket.
+For each one, answer:
+what exact problem it solves
+whether it gives live or historical coverage
+what is missing
+how much engineering would still be needed to use it in this project
+whether it is suitable for:
+research
+live scanning
+backtesting
+production deployment
+Section 5. Best Adjacent Assets to Adapt
+Identify the best non-Polymarket repos or tools that could be adapted.
+Possible categories:
+sports betting sharp-money tools
+on-chain smart-money trackers
+copy-trading analytics tools
+market microstructure research repos
+probabilistic forecast evaluation libraries
+whale-tracking dashboards
+event-market backtest systems
+For each, explain:
+why it is relevant
+what would need to be changed
+whether adaptation difficulty is low, medium, or high
+Section 6. Wallet / Trader Intelligence Stack
+Focus specifically on tools for:
+address clustering
+entity resolution
+labeling
+trade history reconstruction
+position reconstruction
+whale detection
+smart-money ranking
+Identify which tools could help answer:
+who is a whale
+who is a serious non-whale
+who is likely skilled
+who is currently entering which markets
+Section 7. Best Existing Dashboards and Queries
+Find dashboards, SQL queries, public notebooks, or analytics pages that already surface:
+top traders
+wallet activity
+market-level order flow
+profit / win rate estimates
+large wallet concentration
+Polymarket market statistics
+live market movers
+For each, state:
+what signal it provides
+whether it is exportable
+whether it could be embedded or rebuilt
+whether it is enough for an MVP on its own
+Section 8. Code Reuse Opportunities
+Produce a shortlist of the highest-value repos or tools to fork, clone, or adapt.
+For each shortlisted asset, provide:
+exact use case in this project
+why it is high leverage
+what modules/files matter most
+likely changes needed
+risk of dependency on abandoned code
+expected engineering savings
+Section 9. Gap Analysis
+Identify what likely does not exist yet and would need to be built custom.
+Examples may include:
+robust trader skill ranking with shrinkage
+topic-specific skill models
+convergent strong-trader signal engine
+undervaluation ranking logic
+visibility-lag aware copyability model
+combined whale/non-whale intelligence layer
+Separate:
+easy custom components
+medium custom components
+hard custom components
+Section 10. Recommended Starter Stack
+Based on the findings, propose the best stack for an MVP.
+This should include recommendations for:
+data ingestion
+storage
+analytics
+dashboarding
+backtesting
+live alerting
+deployment
+Prefer using existing repos or tools where possible.
+Section 11. MVP Build Order
+Give a practical build sequence using the identified tools.
+For example:
+use existing market API client
+ingest wallet and market history
+use Dune / SQL dashboards for first-pass whale detection
+adapt forecast-scoring libraries for skill ranking
+build simple current-market convergence scanner
+add dashboard and alerts
+The sequence should minimize engineering effort while maximizing speed to first usable signal.
+Required Search Scope
+Search broadly across:
+GitHub
+official Polymarket documentation
+Polymarket developer resources
+Dune dashboards
+Flipside dashboards
+open-source analytics tools
+crypto wallet intelligence tools
+smart-money tracker repos
+prediction-market research code
+sports betting market-tracking repos
+forecasting / calibration libraries
+EVM event indexers
+market data SDKs
+trading bot frameworks that might be adaptable
+public notebooks
+blog posts with linked repos
+research papers with released code
+Evaluation Criteria
+For every repo or tool, evaluate:
+Relevance
+How directly useful is it for this project?
+Reusability
+Can it be used immediately, lightly modified, or only studied?
+Maintenance
+Is it active or abandoned?
+Data access advantage
+Does it unlock hard-to-get data?
+Engineering leverage
+How much time could it save?
+Extensibility
+Can it support a real production system?
+Dependence risk
+Does it rely on fragile scraping, unofficial endpoints, or broken infra?
+Fit for this specific idea
+Does it help with:
+trader skill detection
+whale vs non-whale analysis
+current bet monitoring
+undervaluation detection
+Preferred Output Format
+Use a technical due diligence memo format.
+Include:
+ranked tables
+categorized inventories
+best-in-class picks by layer
+direct reuse recommendations
+fork / adapt / ignore labels
+clear notes on maintenance and risks
+Final Required Output
+End with these exact sections:
+Best Repos to Fork Now
+A ranked list of the highest-value repos or codebases to start from immediately.
+Best Tools to Use Without Modification
+Things that are already useful as-is.
+Best Data Sources / Dashboards
+The best sources for immediate intelligence gathering.
+What Still Needs to Be Built Custom
+The irreducible custom layer.
+Fastest MVP Path
+The lowest-effort route from today to a working prototype.
+Constraints
+Do not just list tools.
+Evaluate them in the context of this exact project.
+Prefer concrete repositories and tools over vague descriptions.
+Distinguish clearly between:
+official
+unofficial
+open-source
+closed but accessible
+abandoned
+production-grade
+hobby-grade
+If a repo is only partially relevant, say exactly which modules are useful.
+If no Polymarket-native repo exists for a certain layer, identify the best adjacent alternative.
+Prioritize things that reduce time to a working system.
+Optional Add-On
+If possible, add a final appendix titled:
+“Reference Architecture from Existing Components”
+In that appendix, propose one plausible end-to-end system assembled mostly from existing tools and lightly modified code.
+Condensed version
+Research all existing repos, SDKs, APIs, dashboards, indexers, notebooks, and analytics tools that could be used, modified, or forked to build a Polymarket smart-money / skilled-trader / undervalued-bet detection system. Focus on tools for market data ingestion, wallet/trader reconstruction, whale tracking, skill scoring, topic classification, backtesting, live signal generation, and dashboards. Evaluate each asset for direct reuse, modifiability, maintenance quality, engineering leverage, and fit for this exact project. Output a ranked technical due diligence memo with concrete recommendations for what to fork, what to use as-is, what to ignore, what still needs custom code, and the fastest MVP path.
+A sharper variant you may also want
+You may want a version that explicitly asks for:
+exact GitHub repos first
+exact files/modules inside those repos
+licensing
+whether commercial use is allowed
+whether the code is recent enough to trust
+whether the APIs are rate-limited or fragile
+That usually makes the output more actionable.
+Here is that tighter add-on block:
+Add this requirement:
+For every shortlisted repo, include:
+repository URL
+license
+last meaningful commit date
+main dependencies
+whether commercial use appears permitted
+specific modules/files most relevant to this project
+whether the repo is safe to build on for a startup MVP
+whether the repo is better as reference only
+
+## Response:
+
+
+## Prompt:
+Deep Research Prompt
+Title:
+Find GitHub Repositories That Can Be Used, Forked, or Modified to Build a Polymarket Skilled-Trader / Whale-vs-Non-Whale / Undervalued-Bet Detection System
+Role
+You are a technical open-source due diligence researcher, quantitative infrastructure analyst, and prediction-market systems investigator.
+Your task is to identify GitHub repositories that could help build a system for:
+identifying Polymarket traders with evidence of real skill
+separating whales from non-whales
+detecting topic-specific trader edge
+tracking what strong traders are currently betting on
+finding current markets where strong-trader activity may indicate undervaluation
+building a research pipeline, live monitoring system, dashboard, or trading intelligence platform around this idea
+This prompt is GitHub-only.
+Do not include general tools, SaaS products, dashboards, websites, newsletters, or APIs unless they are surfaced through a GitHub repository and the repository itself is the object of evaluation.
+Core Objective
+Find the best GitHub repositories that can be:
+used directly
+lightly modified
+heavily adapted
+forked into a custom system
+used as reference architecture
+combined into an MVP or full production stack
+The goal is to minimize net-new engineering by exploiting existing open-source code where it is genuinely reusable.
+Primary Research Questions
+A. Direct Polymarket Repositories
+What GitHub repos exist specifically for Polymarket?
+Which of them are official versus unofficial?
+Which repos cover:
+market data ingestion
+live trade ingestion
+CLOB access
+order placement
+market metadata
+event/category labeling
+real-time feeds
+wallet activity
+trade history reconstruction
+trader tracking
+analytics
+bots
+agent frameworks
+Which official Polymarket repos provide the strongest base layer for:
+historical research
+live monitoring
+execution
+production deployment
+B. Trader Tracking / Smart-Money / Whale Detection Repositories
+What GitHub repos exist for:
+Polymarket wallet tracking
+top-trader tracking
+position reconstruction
+trader leaderboards
+PnL estimation
+suspicious-wallet detection
+insider-style flow detection
+smart-money monitoring
+Which of these are serious enough to reuse versus only hobby projects?
+C. Adjacent Repositories Worth Adapting
+What non-Polymarket GitHub repos could be adapted from adjacent domains such as:
+prediction market analytics
+Kalshi or other event-market systems
+sports-betting sharp-money tracking
+copy-trading analytics
+on-chain whale tracking
+wallet clustering
+probabilistic forecast scoring
+event-driven backtesting
+Which adjacent repos reduce engineering time for:
+skill scoring
+trader segmentation
+topic classification
+live signal detection
+undervaluation ranking
+backtesting
+D. MVP Stack Assembly from Repos
+Which repos together could form an MVP with minimal custom code?
+Which repos are best for:
+ingestion layer
+storage and normalization
+trader analytics
+signal engine
+dashboard or analyst interface
+Which missing pieces still require custom implementation even if the best repos are combined?
+Required Deliverables
+Section 1. Executive Summary
+Answer directly:
+Are there enough GitHub repos to build an MVP without starting from zero?
+Which layers are already well-covered by existing repos?
+Which layers are weak or missing?
+Is the main bottleneck likely:
+data ingestion
+trader reconstruction
+skill scoring
+topic specialization logic
+live undervaluation ranking
+dashboard integration
+Section 2. Master Inventory of Relevant GitHub Repos
+Produce a structured inventory of all relevant repositories found.
+For each repo, include:
+repository name
+repository URL
+owner
+official or unofficial
+primary purpose
+language / stack
+license
+star count
+fork count if available
+last meaningful commit date
+maintenance status
+commercial-use suitability
+whether it appears production-usable, research-usable, prototype-only, or reference-only
+Section 3. Classification by System Layer
+Organize all repos by build layer:
+data acquisition
+live market ingestion
+trade / wallet reconstruction
+trader scoring and analytics
+topic classification
+backtesting
+signal generation
+dashboard / frontend
+alerting / automation
+execution / order routing
+For each layer, identify:
+best repo overall
+easiest repo to reuse
+best repo to fork
+most extensible repo
+largest repo gap
+Section 4. Best Official Polymarket Repositories
+Identify the strongest official Polymarket repos.
+For each one, answer:
+what exact problem it solves
+whether it gives live or historical access
+which modules/files matter most
+whether it is suitable for:
+research
+live monitoring
+backtesting
+production execution
+what it still does not solve for this project
+Section 5. Best Unofficial Polymarket Repositories
+Identify the strongest unofficial repos specifically related to:
+trader tracking
+trade tracking
+market analytics
+signal generation
+suspicious-wallet detection
+market analysis
+For each one, explain:
+why it is relevant
+whether it is genuinely reusable
+whether it is better as:
+direct dependency
+fork target
+reference architecture only
+what engineering changes would be required
+Section 6. Best Adjacent Repositories to Adapt
+Identify the best non-Polymarket GitHub repos from adjacent domains.
+Examples:
+prediction-market analysis repos
+sports-betting line-move or sharp-money repos
+wallet-intelligence repos
+copy-trading repos
+probabilistic scoring libraries
+event-driven backtesting frameworks
+For each, explain:
+why it maps to this project
+which components are reusable
+adaptation difficulty: low / medium / high
+whether the repo solves a missing layer better than any Polymarket-native repo
+Section 7. Repo-Level Reuse Analysis
+For each shortlisted repo, include a deeper reuse analysis:
+exact modules/files likely useful
+what code can be used unchanged
+what code needs modification
+what code should be ignored
+dependency risks
+code quality signals
+likely engineering savings
+likely hidden costs
+Section 8. Gap Analysis
+Identify what likely does not exist in reusable repo form and would need custom code.
+Separate into:
+Easy custom components:
+simple wrappers
+normalizers
+filters
+connectors
+Medium custom components:
+trader ranking logic
+whale-vs-non-whale segmentation
+topic tagging
+convergence scoring
+Hard custom components:
+robust skill estimation with shrinkage
+topic-conditional skill models
+copyability-aware live signal engine
+undervaluation ranking layer
+entity resolution across wallets if needed
+Section 9. Recommended Repo Stack for an MVP
+Propose the best repo-based MVP stack.
+Specify exactly:
+base repo for Polymarket data access
+base repo for trade ingestion
+base repo for analytics
+best adjacent repo for scoring / backtesting
+best repo for dashboard or operator workflow
+repos that should be forked versus used as library dependencies
+Section 10. Build Order Using Existing Repos
+Give a practical implementation order using the selected repos.
+For example:
+start from official Polymarket client repo
+add one trade-tracking repo
+add one prediction-market analytics repo
+add custom trader scoring layer
+add current-market convergence scanner
+add basic UI or alerts
+The build order should minimize time to first usable signal.
+Required Search Scope
+Search GitHub broadly, but prioritize repositories in these categories:
+official Polymarket repos
+unofficial Polymarket analytics repos
+Polymarket trade tracker repos
+prediction-market analysis repos
+Kalshi-adjacent repos if code is adaptable
+sports-betting sharp-money repos
+wallet clustering / smart-money repos
+probabilistic scoring repos
+event-driven backtesting repos
+analyst dashboard repos if GitHub-hosted and reusable
+Evaluation Criteria
+For every repo, evaluate:
+Direct relevance
+How directly useful is it for this exact project?
+Reusability
+Can it be used immediately, lightly modified, or only studied?
+Maintenance quality
+Is it active, semi-active, or abandoned?
+Startup safety
+Is the code and license safe enough to build an MVP on?
+Engineering leverage
+How much time could it save?
+Extensibility
+Can it support a system beyond a toy demo?
+Data advantage
+Does it unlock difficult-to-access market or trader data?
+Fit to this exact idea
+Does it help with:
+trader skill detection
+whale vs non-whale analysis
+topic-specific edge
+current bet monitoring
+undervaluation detection
+Hard Requirements
+GitHub repos only.
+Do not include non-repo tools.
+Prefer concrete repos over conceptual mentions.
+For every shortlisted repo, include:
+exact URL
+exact license
+last meaningful commit date
+language
+relevant directories/files
+whether commercial use appears allowed
+whether it is safe for a startup MVP
+Distinguish clearly between:
+official
+unofficial
+active
+stale
+production-grade
+hobby-grade
+reusable
+reference-only
+If a repo is only partially relevant, specify exactly which parts are useful.
+If no good repo exists for a layer, say so explicitly.
+Rank repos by practical usefulness, not by stars alone.
+Preferred Output Format
+Write as a technical due diligence memo.
+Include:
+ranked tables
+repo classifications
+fork / adapt / ignore labels
+code reuse notes
+licensing notes
+maintenance notes
+explicit MVP recommendations
+Final Required Sections
+End with these exact sections:
+Best Repos to Fork Now
+A ranked list of the highest-value repositories to start from immediately.
+Best Repos to Use As-Is
+Repositories that can be used with minimal or no modification.
+Best Repos to Study for Reference
+Repos that are useful mainly for architecture or ideas.
+What Still Needs Custom Code
+The irreducible custom layer for this project.
+Fastest Repo-Based MVP Path
+The lowest-effort route from today to a working prototype.
+Repo Risk Register
+Top legal, maintenance, fragility, and dependency risks.
+Optional Add-On
+Add this if possible:
+Appendix: Candidate End-to-End Architecture Built Mostly from Existing Repos
+In this appendix, assemble one plausible system using mostly existing repositories and minimal custom glue code.
+Condensed version
+Research GitHub repositories only that could be used, forked, or modified to build a Polymarket skilled-trader / whale-vs-non-whale / undervalued-bet detection system. Prioritize official Polymarket repos, unofficial Polymarket analytics and trade-tracker repos, and adjacent repos from prediction-market analytics, sports-betting sharp-money tracking, wallet intelligence, probabilistic scoring, and event-driven backtesting. For each repo, evaluate exact relevance, reusability, license, maintenance status, last meaningful commit, code quality, commercial-use suitability, specific modules/files worth reusing, and fit for this exact project. Output a ranked technical due diligence memo with concrete recommendations for what to fork, what to use as-is, what to study only, what still needs custom code, and the fastest repo-based MVP path.
+A stricter add-on block you can append
+You must explicitly inspect and evaluate official Polymarket repositories such as the CLOB clients and any current agent or SDK repositories, plus at least several third-party repos related to Polymarket trade tracking or analytics, and at least several adjacent repos for prediction-market analytics or betting signal detection. Current Polymarket GitHub repos include official CLOB clients in Rust, TypeScript, and Python, plus additional SDK and agent repos, while third-party examples include trade trackers, insider-style trackers, and broader prediction-market analysis frameworks. (GitHub)
+A good repo-first shortlist to force the researcher to inspect would include, at minimum, official Polymarket repos plus third-party repos such as leolopez007/polymarket-trade-tracker, Jon-Becker/prediction-market-analysis, pselamy/polymarket-insider-tracker, and similar Polymarket analysis repos. (GitHub)
+
+## Response:
+
+
+## Prompt:
+Deep Research Prompt
+Title:
+GitHub Repo Triage for a Polymarket Skilled-Trader / Whale-vs-Non-Whale / Undervalued-Bet System
+Role
+You are a technical due diligence analyst and open-source architecture reviewer.
+Your task is to identify the best GitHub repositories to use, fork, adapt, or ignore for building a Polymarket intelligence system that does four things:
+identifies historically skilled traders
+separates whales from non-whales
+tracks what those traders are betting on now
+finds markets where strong-trader behavior may imply current undervaluation
+This is not a broad tooling survey.
+This is a strict GitHub repo triage exercise.
+Core Objective
+Return only the most relevant repositories and force a hard verdict on each one:
+FORK
+ADAPT
+USE AS-IS
+REFERENCE ONLY
+IGNORE
+The goal is to minimize time to a working MVP.
+Hard Constraints
+GitHub repos only.
+No general tools, websites, dashboards, newsletters, or SaaS products unless the GitHub repo itself is the evaluated object.
+Do not produce a giant directory.
+Return only the top 15 repositories total.
+Every repo must receive a verdict.
+Rank by practical usefulness for this exact project, not popularity.
+If a repo is weak, stale, or irrelevant, say so directly.
+If a system layer has no good repo, state that explicitly instead of padding with weak options.
+Project Scope to Optimize For
+The target system should eventually support:
+Polymarket market ingestion
+live and historical trade ingestion
+wallet/trader reconstruction
+trader ranking by likely skill
+whale vs non-whale segmentation
+topic-specific edge detection
+current-market signal extraction
+undervaluation ranking
+backtesting
+minimal dashboard or analyst workflow
+Required Search Scope
+You must inspect repositories across these categories:
+official Polymarket repos
+unofficial Polymarket repos
+Polymarket trade-tracker repos
+Polymarket analytics repos
+prediction-market analysis repos
+smart-money / whale-tracking repos
+probabilistic scoring / forecast evaluation repos
+event-driven backtesting repos
+lightweight dashboard or analyst UI repos only if genuinely reusable
+Do not force coverage of every category if good repos do not exist there.
+Required Output Structure
+Section 1. Executive Verdict
+Answer directly:
+Is there enough repo coverage to build an MVP without starting from zero?
+Which layers are well-covered?
+Which layers are poorly covered or missing?
+What are the three highest-leverage repos overall?
+What are the biggest custom-code gaps that remain no matter what?
+Section 2. Top 15 Repositories Only
+Return a table with exactly these columns:
+Rank
+Repo
+URL
+Owner
+Official or Unofficial
+Primary Layer
+Language
+License
+Last Meaningful Commit
+Maintenance Status
+Verdict
+Why It Matters
+Key Reusable Files / Modules
+Startup MVP Suitability
+Main Risk
+Verdict must be one of:
+FORK
+ADAPT
+USE AS-IS
+REFERENCE ONLY
+IGNORE
+Primary Layer should be one of:
+data acquisition
+live ingestion
+wallet/trader reconstruction
+analytics/scoring
+topic classification
+backtesting
+signal generation
+dashboard/UI
+execution
+alerting/automation
+Section 3. Hard Repo Reviews
+For the top 10 repos, provide a short but concrete review of each:
+A. What exact problem it solves
+B. What part is actually useful for this project
+C. What would need to be changed
+D. Whether it is structurally good enough to build on
+E. Whether the repo saves serious time or only looks useful superficially
+These reviews must be blunt and specific.
+Section 4. Best Repos by Immediate Use Case
+Pick the single best repo for each of the following:
+best base repo for Polymarket access
+best repo for live ingestion
+best repo for historical reconstruction
+best repo for trader/wallet analysis
+best repo for analytics or scoring
+best repo for backtesting
+best repo for dashboard/UI
+best repo to fork first
+If no good repo exists for a category, say:
+No strong repo found.
+Section 5. Fork / Adapt / Ignore Matrix
+Create three short ranked lists:
+A. Fork immediately
+These should be the repos that most directly accelerate the MVP.
+B. Adapt if needed
+These are useful but require moderate changes.
+C. Ignore
+These are low-quality, stale, misleading, too narrow, or not worth the maintenance burden.
+Section 6. Repo-Level Code Reuse Notes
+For each repo marked FORK, ADAPT, or USE AS-IS, specify:
+exact folders, modules, or files worth reusing
+what can remain unchanged
+what should be rewritten
+whether the repo is better as a library dependency or fork target
+likely engineering savings in practical terms
+Section 7. Missing Layers That Still Need Custom Code
+List the major components that still require new implementation.
+Separate them into:
+Easy custom code
+wrappers
+adapters
+schema normalizers
+filters
+Medium custom code
+whale/non-whale classification
+topic tagging
+convergence scoring
+current-market candidate ranking
+Hard custom code
+robust skill estimation with shrinkage
+topic-conditional skill modeling
+visibility-lag-aware copyability model
+undervaluation engine
+wallet/entity resolution if fragmented across addresses
+Section 8. Fastest Repo-Based MVP Path
+Give the minimum build path using the selected repos.
+This must be a concrete sequence, such as:
+start from repo X for Polymarket access
+fork repo Y for trade tracking
+use repo Z for backtest/event engine
+add thin custom normalization layer
+add trader ranking logic
+add live convergence scanner
+expose through simple analyst interface
+Optimize for shortest path to a usable prototype.
+Section 9. Repo Risk Register
+List the major risks from building on the shortlisted repos:
+stale maintenance
+fragile unofficial endpoints
+bad licensing
+poor code quality
+hidden architectural debt
+missing tests
+dependency sprawl
+unsuitable abstractions
+weak documentation
+incomplete historical coverage
+For each risk, say which repo it affects and how serious it is.
+Required Evaluation Criteria
+For each repo, evaluate rigorously on:
+direct relevance to this exact project
+code reusability
+maintenance quality
+license safety for a startup MVP
+extensibility
+practical engineering leverage
+risk of depending on it
+whether it solves a real bottleneck or just looks interesting
+Required Review Rules
+Do not reward repos for stars alone.
+Do not overvalue official repos if they solve only a narrow layer.
+Do not include repos just because they mention Polymarket.
+Prefer repos with code that can actually be reused.
+If a repo is mainly educational or experimental, mark it accordingly.
+If a repo is only useful for ideas, mark REFERENCE ONLY.
+If a repo is weak or irrelevant, mark IGNORE.
+Be explicit when a repo is attractive but not strategically useful.
+Final Required Sections
+End with exactly these sections:
+Top 5 Repos to Start From
+Top 5 Repos Not Worth the Trouble
+Minimum Viable Repo Stack
+Irreducible Custom Layer
+Final Go / No-Go on a Repo-First MVP
+Optional stricter add-on
+Append this block if you want even harsher triage:
+Additional instruction:
+Do not return more than 15 repositories under any circumstances.
+At least 3 repos must be marked IGNORE unless the evidence overwhelmingly shows otherwise.
+At least 3 repos must be marked FORK, ADAPT, or USE AS-IS only if there is real code reuse value.
+If the repo ecosystem is weaker than expected, say so directly and conclude that the MVP will require substantial custom code.
+Compressed version
+Find and triage only the top 15 GitHub repositories relevant to building a Polymarket skilled-trader / whale-vs-non-whale / undervalued-bet detection system. Evaluate official and unofficial Polymarket repos plus adjacent repos in prediction-market analytics, smart-money tracking, forecast scoring, and backtesting. For each repo, assign a hard verdict: FORK, ADAPT, USE AS-IS, REFERENCE ONLY, or IGNORE. Focus on concrete code reuse, licensing, maintenance, startup suitability, and fit for this exact project. Output a blunt technical due diligence memo, a fork/adapt/ignore matrix, the fastest repo-based MVP path, the irreducible custom layer, and a final go/no-go judgment on whether a repo-first MVP is viable.
+
+## Response:
+
+
+
+
+Powered by ChatGPT Exporter (https://www.chatgptexporter.com)

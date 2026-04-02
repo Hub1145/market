@@ -1,0 +1,154 @@
+andy:
+White Industrial Seismology, Inc. (whiteseis.com): Provides seismograph data analysis software (SDA) and blast monitoring services. They offer 24/7 monitoring, vibration control, and reporting for construction, mining, and demolition projects.
+Nanometrics (nanometrics.ca): Delivers comprehensive seismic monitoring, including Induced Seismicity Forecasting and risk management for critical infrastructure and the energy sector.
+SeismicAI (seismicai.com): Specializes in Earthquake Early Warning (EEW) and real-time situational awareness for industrial sites, providing tools like ShakeCommand and automated ShakeReport.
+Amberg Technologies (Tunnel Seismic Prediction - TSP): Focused on underground construction, providing real-time seismic forecasting for tunnel safety.
+Earth Science Analytics (EarthNET AI): Uses artificial intelligence to predict seismic properties and subsurface data for energy exploration.
+Kinemetrics (kinemetrics.com): Provides monitoring platforms for critical infrastructure and seismic safety, featuring OasisPlus for earthquake business continuity.
+Sauls Seismic (saulsseismic.com): Provides outsourced seismic monitoring and environmental inspection services for quarries and construction sectors. 
+whiteseis.com
+whiteseis.com
+ +9
+
+Top agricultural weather prediction sites provide specialized data such as soil moisture, evapotranspiration, and growing degree days to optimize farming. The best options include Meteoblue for precise modeling, AccuWeather for localized radar, USDA WAOB for crop-related forecasts, and специализированный apps like Weather4Farmers. 
+content.meteoblue.com
+content.meteoblue.com
+ +4
+Best Agricultural Weather Prediction Sites & Apps
+Meteoblue (Best for precision): Offers detailed agricultural models, risk management, and yield estimations through specialized agricultural weather tools.
+AccuWeather (Best for hyper-local): Valued by growers for, minute-by-minute radar information which helps plan and protect crops from immediate severe weather.
+USDA Agricultural Weather (Best for industry intelligence): Provides comprehensive assessments, including the Weekly Weather and Crop Bulletin and U.S. Drought Monitor, crucial for large-scale planning.
+Weather4Farmers (Best for tailored advice): Provides specific localized weather, rainfall data, and agricultural advice to determine the best times for planting, harvesting, and pest control.
+Meteomatics (Best for data integration): Offers a robust API providing agri-parameters like soil moisture, leaf wetness, and high-resolution numerical models (EURO1k/US1k).
+Weenat (Best for real-time monitoring): An agro-weather app that connects to field sensors to provide instant, precise data without needing to be physically present at the plot.
+WeatherTrends360/FarmCast (Best for long-range): Known for providing long-range seasonal forecasting and analytics for farmers. 
+content.meteoblue.com
+content.meteoblue.com
+ +6
+
+The best industrial-grade nautical weather prediction sites provide high-resolution, multi-model data, route optimization, and specialized services for sectors such as shipping, offshore energy, and maritime safety. Leading platforms for industrial use include StormGeo, DTN, Weathernews, and Spire Global, which are favored for their specialized forecasting and operational efficiency tools. 
+sea.weathernews.com
+sea.weathernews.com
+ +2
+Here are the top-rated industrial nautical weather prediction sites and services based on operational needs:
+1. Top Industrial & Offshore Weather Solutions
+StormGeo: Considered a leader for shipping and offshore energy, providing site-specific forecasts, route optimization, and 24/7 monitoring for severe weather.
+DTN (Marine & Offshore): Utilizes a large network of 180+ meteorologists and 20,000+ weather stations to provide hyper-local forecasts and advanced alerts for commercial operations.
+Weathernews: Known as one of the largest private weather service providers. Its "SeaNavigator" platform is designed for maritime operations, voyage planning, and risk management.
+Fugro: Combines meteorological forecasts with geotechnical data, specializing in supporting offshore construction, exploration, and site-specific operational decisions.
+Spire Global: Provides satellite-based maritime weather data (radio occultation) with very high spatial resolution, which has been validated as high-performing for wind speed and direction. 
+sea.weathernews.com
+sea.weathernews.com
+ +6
+2. High-Accuracy Modeling & Planning Sites
+PredictWind: Known as a "gold standard" for offshore sailors and professional sailors, utilizing its own proprietary models (PWG/PWE) alongside the ECMWF and GFS models for high-accuracy forecasting and weather routing.
+Weather Routing Inc. (WRI): Offers highly detailed, specialized reports and personal consultations for trans-ocean crossings, yachting, and marine industries.
+PassageWeather: Offers 7-day wind and wave forecasts focused on voyage planning and route optimization, using data from ECMWF and GFS models.
+Vento Maritime: Provides high-resolution numerical atmospheric and oceanographic models for specific locations through its Ventonia portal. 
+ventomaritime.dk
+ventomaritime.dk
+ +4
+3. Best Data Visualization & Free/Low-Cost Tools
+Windy.com: Offers professional-grade visualization, allowing users to compare top models (ECMWF, GFS, ICON, UKMO) on an interactive map. Frequently used for detailed wind, wave, and ocean current data.
+NOAA (nowCOAST & OPC): The definitive source for free, authoritative marine warnings, offshore forecasts, and high-seas forecasts. It provides detailed data for the US and international waters. 
+oceanservice.noaa.gov
+oceanservice.noaa.gov
+ +4
+4. Specialized Maritime Applications
+SeaLegsAI: AI-powered, providing "Go/Caution/Avoid" recommendations by interpreting 12+ weather models for specific routes.
+FishWeather/Buoyweather: Highly regarded for offshore fishing and marine operations requiring detailed, localized, and long-range (16-day) forecasts. 
+Key Selection Factors for Industrial Use
+Model Variety: The best platforms (e.g., PredictWind, Windy) offer comparisons between the ECMWF (European) and GFS (American) models, with ECMWF often considered superior for medium-range forecasts.
+Operational Integration: Platforms like StormGeo and Weathernews integrate directly with vessel management systems to optimize fuel consumption and safety.
+Data Type: Ensure the provider offers specific data necessary for your industry, such as wave height, swell period, surface pressure, and ocean currents. 
+sea.weathernews.com
+sea.weathernews.com
+ +5
+5 best boating weather apps for best marine forecast - Wavve Boating
+Mar 26, 2024 — Best Marine Weather App | 5 best boating weather apps for best marine forecast * Wavve Boating: The Wavve Boating App takes the top spot on our list for its use...
+
+www.wavveboating.com
+
+The best sea solutions for Shipping & Offshore energy - Weathernews
+* SeaNavigator. * Anemoi. * SeaNavigator Starter. * Weathernews API & Integrations. * SeaNavigator Free. ... The best sea solutions for Shipping & Offshore ener...
+
+sea.weathernews.com
+
+7 Best Marine Weather Apps for Boaters (2026) | SeaLegsAI
+Mar 1, 2026 — Table_title: Quick Comparison Table_content: header: | App | Best For | Price | row: | App: Windy.com | Best For: Free weather visualization | Price: Free (Prem...
+
+www.sealegs.ai
+
+Forecasts and Predictions - Marine Navigation
+* GFSwave. * Surge and Tide Operation Forecast System (STOFS) * STOFS-2D-Global runs four times daily producing numerical storm surge and tide model forecast gu...
+
+marinenavigation.noaa.gov
+
+Marine and Offshore - DTN
+Why DTN? * Whether you need an always-on solution or a specific forecast for a singular site, DTN can provide you the most accurate marine weather forecast avai...
+
+www.dtn.com
+
+Top Marine Weather Service Companies & How to Compare Them ( ...
+Nov 13, 2025 — StormGeo: Offers comprehensive weather solutions with a focus on maritime safety and operational efficiency. AccuWeather Enterprise Solutions: Provides tailored...
+
+www.linkedin.com
+Weather insights for maritime industry - Weathernews SEA
+* SeaNavigator. The all-in-one platform solution to optimize your maritime operations. * Anemoi. The one-stop platform to enhance your offshore wind operations.
+
+sea.weathernews.com
+
+Offshore Weather Service - Vento Maritime
+Feb 9, 2017 — MetOcean forecast data web portal. Our Ventonia web portal is a password protected web site hosted and provided by Vento Maritime, which has high resolution num...
+
+ventomaritime.dk
+
+Weather forecasting - Fugro
+May 22, 2023 — Expertise. Planning weather-sensitive operations? Dealing with changes in weather conditions at your project site? Fugro's accurate weather forecasting expertis...
+
+www.fugro.com
+
+Where do I get real-time and forecast coastal conditions?
+Jun 16, 2024 — With nowCOAST, you can get a one-stop-shop look at coastal conditions — real-time and forecast — before you do or plan anything on the water. The nowCOAST map v...
+
+oceanservice.noaa.gov
+
+Weather Routing & Voyage Optimization - StormGeo
+The foundation for optimizing a sea passage is accurate weather prediction coupled with best-in-class routing advice. StormGeo has been the industry leader in p...
+
+stormgeo.com
+
+Yachting and Fishing Services - Weather Routing Inc
+Yachting and Fishing Services. WRI offers discount forecast packages for those embarking on trans-ocean crossings, and offshore voyages for sailing yachts. Cont...
+
+www.wriwx.com
+
+Best Weather Apps for Sailors: 9 Essential Tools - Sailing Course Online
+Jan 1, 2026 — The Weather Apps We Recommend For Sailors * 1. PredictWind. predictwind.com | Free basic / $29-$499 per year. PredictWind is widely regarded as the gold standar...
+
+www.sailingcourseonline.co.uk
+
+Best Online Weather Resources for Boaters - Markel
+Jan 1, 2020 — Log in to Markel * mPortal. * Markel Online. * MAGIC Personal Lines portal. * Markel Surety. ... Top Marine Weather Websites. NOAA Marine Weather – The National...
+
+www.markel.com
+
+Better, More Accurate Wind Forecasts - Spire : Global Data and Analytics
+PredictWind success story. PredictWind provides the maritime sporting and leisure community with high-quality ocean forecasts. The company offers its community ...
+
+spire.com
+
+CUSTOM WEATHER / SOLUTIONS - MARINE AND TROPICAL
+Description: StormGeo offers site-specific forecasts, monitoring and alerts for all severe weather, including specialization in hurricanes.
+
+www.weather.gov
+The European weather model (ECMWF) is often seen as superior ...
+Jan 21, 2026 — The European weather model (ECMWF) is often seen as superior to the American model (GFS) due to more powerful computing, superior data assimilation (like 4D-Var...
+
+x.com
+The Best Weather Forecast Models of 2026: Expert Picks!
+Feb 18, 2026 — 1. ECMWF IFS: Most accurate global model Why it's #1: ECMWF's Cycle 49r1 (November 2024) pushed useful forecast skill past 10 days for the first time. WMO verif...
+
+www.getambee.com
+
+AI can make mistakes, so double-check responses
