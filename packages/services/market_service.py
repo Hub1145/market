@@ -184,7 +184,7 @@ class MarketService:
                 ))
         await self.session.commit()
 
-    async def get_all_markets(self) -> List[Market]:
+    async def get_all_markets(self) -> list[Market]:
         """Fetch all markets from local DB."""
         result = await self.session.execute(select(Market))
         return list(result.scalars().all())
