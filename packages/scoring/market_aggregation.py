@@ -203,6 +203,7 @@ async def aggregate_market_signals(
     market_id: str,
     strategy: str = "bayesian_ensemble",
     cutoff_time: Optional[datetime] = None,
+    market_question: Optional[str] = None,
 ) -> Optional[MarketSignalSnapshot]:
     """
     Aggregate skilled-trader activity into a Bayesian alpha signal.
@@ -264,10 +265,12 @@ async def aggregate_market_signals(
     #    any skilled-trader trades have been accumulated.                   #
     # ------------------------------------------------------------------ #
     if strategy in _EXTERNAL_DATA_STRATEGIES:
-        market_q_row = await session.execute(
-            select(Market.question).where(Market.id == market_id)
-        )
-        market_q_str = market_q_row.scalar()
+        # Use pre-fetched question; fall back to a DB lookup only if caller didn't provide it
+        market_q_str = market_question
+        if not market_q_str:
+            market_q_str = (await session.execute(
+                select(Market.question).where(Market.id == market_id)
+            )).scalar()
         if market_q_str:
             ext_sig = await _build_external_signal(
                 session, market_id, market_q_str, strategy, cutoff_time=cutoff_time
@@ -316,10 +319,9 @@ async def aggregate_market_signals(
     yes_market_price: Optional[float] = None
 
     if strategy in ["laddering", "disaster"]:
-        market_res = await session.execute(
+        market_q = market_question or (await session.execute(
             select(Market.question).where(Market.id == market_id)
-        )
-        market_q = market_res.scalar()
+        )).scalar()
         if market_q:
             live_price = await _get_yes_price(session, market_id)
             yes_market_price = live_price if live_price is not None else 0.5

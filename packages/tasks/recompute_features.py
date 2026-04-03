@@ -46,12 +46,15 @@ async def refresh_trader_profiles(session: AsyncSession):
 
     for address in addresses:
         # ------------------------------------------------------------ #
-        # 1. Fetch full Trade rows (directional_purity needs .side/.size)#
+        # 1. Fetch Trade rows — cap at 500 most recent.                 #
+        #    CLV averages converge well before 500; loading 10K+ trades #
+        #    per whale wastes GBs of memory with negligible gain.       #
         # ------------------------------------------------------------ #
         trade_stmt = (
             select(Trade)
             .where(Trade.trader_address == address)
-            .order_by(Trade.timestamp.asc())
+            .order_by(Trade.timestamp.desc())
+            .limit(500)
         )
         trades = (await session.execute(trade_stmt)).scalars().all()
 
@@ -93,17 +96,18 @@ async def refresh_trader_profiles(session: AsyncSession):
         gamma_score  = float(max(topic_skills.values())) if topic_skills else 0.0
 
         # ------------------------------------------------------------ #
-        # 5. Win rate from ClosedPositions                               #
+        # 5. Win rate from ClosedPositions (column-only — no full ORM) #
         # ------------------------------------------------------------ #
-        closed = (
+        pnl_rows = (
             await session.execute(
-                select(ClosedPosition).where(ClosedPosition.trader_address == address)
+                select(ClosedPosition.realized_pnl)
+                .where(ClosedPosition.trader_address == address)
             )
         ).scalars().all()
 
-        if closed:
-            wins     = sum(1 for p in closed if (p.realized_pnl or 0) > 0)
-            win_rate = wins / len(closed)
+        if pnl_rows:
+            wins     = sum(1 for pnl in pnl_rows if (pnl or 0) > 0)
+            win_rate = wins / len(pnl_rows)
         else:
             win_rate = 0.0
 
@@ -120,7 +124,7 @@ async def refresh_trader_profiles(session: AsyncSession):
         # Resolution skill: win-rate centred at 0 (0.5 baseline = no edge)
         resolution_skill  = apply_shrinkage(
             win_rate - 0.5,
-            len(closed) if closed else 0,
+            len(pnl_rows) if pnl_rows else 0,
             threshold=10,
         )
 
@@ -148,7 +152,10 @@ async def refresh_trader_profiles(session: AsyncSession):
         profile.win_rate           = win_rate
         profile.last_updated       = datetime.utcnow()
 
-    await session.commit()
+        # Commit per-wallet so SQLAlchemy's identity map doesn't accumulate
+        # thousands of Trade objects across all wallets in one session.
+        await session.commit()
+
     logger.info(f"Refreshed {len(addresses)} trader profiles.")
 
     # ------------------------------------------------------------------ #

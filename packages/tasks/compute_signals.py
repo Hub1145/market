@@ -85,10 +85,21 @@ async def refresh_market_signals(session: AsyncSession):
     strategy = settings.strategy
     logger.info(f"Using Strategy Mode: {strategy}")
 
-    # Purge signals older than 24 h
-    cutoff = datetime.utcnow() - timedelta(hours=24)
+    now = datetime.utcnow()
+
+    # Keep only the last 6 hours of signals — they are recomputed every 30 s
+    # so 24 h retention just inflates the DB for no benefit.
+    signal_cutoff = now - timedelta(hours=6)
     await session.execute(
-        delete(MarketSignalSnapshot).where(MarketSignalSnapshot.created_at < cutoff)
+        delete(MarketSignalSnapshot).where(MarketSignalSnapshot.created_at < signal_cutoff)
+    )
+
+    # Prune stale PriceSnapshots (older than 3 days) to prevent unbounded growth.
+    # Only the latest price per outcome is ever read; older rows are waste.
+    from packages.db.models.price import PriceSnapshot
+    price_cutoff = now - timedelta(days=3)
+    await session.execute(
+        delete(PriceSnapshot).where(PriceSnapshot.timestamp < price_cutoff)
     )
 
     markets = await _get_markets_for_strategy(session, strategy)
@@ -96,19 +107,22 @@ async def refresh_market_signals(session: AsyncSession):
 
     new_signals = 0
     for market in markets:
-        signal = await aggregate_market_signals(session, market.id, strategy=strategy)
+        market_q = market.question or ""
+        signal = await aggregate_market_signals(
+            session, market.id, strategy=strategy, market_question=market_q
+        )
 
         # For non-external-data strategies: also try external data for matching
         # weather/earthquake questions (fills Alpha Scan during paper warm-up).
         if signal is None and strategy not in _EXTERNAL_DATA_STRATEGIES:
-            q_lower = (market.question or "").lower()
-            if is_earthquake_market(market.question or ""):
+            q_lower = market_q.lower()
+            if is_earthquake_market(market_q):
                 signal = await _build_external_signal(
-                    session, market.id, market.question or "", "seismic"
+                    session, market.id, market_q, "seismic"
                 )
             elif any(kw in q_lower for kw in _STRATEGY_KEYWORDS.get("laddering", [])):
                 signal = await _build_external_signal(
-                    session, market.id, market.question or "", "laddering"
+                    session, market.id, market_q, "laddering"
                 )
 
         if signal:

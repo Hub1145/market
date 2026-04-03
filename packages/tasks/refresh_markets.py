@@ -53,10 +53,10 @@ async def refresh_markets(session: AsyncSession):
     await service.prune_resolved_markets(older_than_days=7)
 
     # ------------------------------------------------------------------ #
-    # Pass 1: Global volume-based sync (wide net)                      #
+    # Pass 1: Global volume-based sync (top by volume)                 #
+    # Tag-based pass 2 covers the long tail — 500 here is sufficient.  #
     # ------------------------------------------------------------------ #
-    # Increased to 2000 for full market coverage
-    await service.refresh_active_markets(limit=2000)
+    await service.refresh_active_markets(limit=500)
 
     # ------------------------------------------------------------------ #
     # Pass 2: tag-based comprehensive fetch (+ priority tags)             #

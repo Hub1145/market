@@ -48,7 +48,7 @@ class AppSettings(BaseModel):
     # Trading parameters persisted by the UI Settings tab via /api/config
     trade_amount: float = 10.0
     min_edge: float = 0.20
-    scan_interval: int = 1
+    scan_interval: int = 30
     paper_balance: float = 1000.0
     max_trades: int = 10
 

@@ -177,7 +177,14 @@ async def map_db_to_bot_state(
     # 3. Recent skilled-trader activity feed                               #
     # ------------------------------------------------------------------ #
     feed_stmt = (
-        select(Trade, TraderClassification.label, Market.question)
+        select(
+            Trade.trader_address,
+            Trade.side,
+            Trade.notional,
+            Trade.size,
+            TraderClassification.label,
+            Market.question,
+        )
         .join(TraderClassification, Trade.trader_address == TraderClassification.address)
         .join(Market, Trade.market_id == Market.id)
         .where(
@@ -188,14 +195,14 @@ async def map_db_to_bot_state(
     )
     feed_items  = (await session.execute(feed_stmt)).all()
     news_events = []
-    for t, label, question in feed_items:
-        notional_val = float(t.notional if t.notional is not None else (t.size or 0.0))
+    for trader_address, side, notional, size, label, question in feed_items:
+        notional_val = float(notional if notional is not None else (size or 0.0))
         news_events.append({
-            "trader":   t.trader_address[:12] + "...",
+            "trader":   trader_address[:12] + "...",
             "label":    label.upper(),
-            "activity": f"{t.side.upper()} ${notional_val:.2f}",
+            "activity": f"{side.upper()} ${notional_val:.2f}",
             "impact":   f"+{notional_val / 100:.1f}%",
-            "summary":  f"Entered {t.side} on '{question[:30]}...'",
+            "summary":  f"Entered {side} on '{question[:30]}...'",
         })
 
     # ------------------------------------------------------------------ #

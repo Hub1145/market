@@ -72,10 +72,10 @@ class GammaClient:
         response.raise_for_status()
         return response.json()
 
-    async def get_events_paginated(self, max_events: int = 2000) -> List[Dict[str, Any]]:
+    async def get_events_paginated(self, max_events: int = 500) -> List[Dict[str, Any]]:
         """
         Fetch up to max_events active events across multiple pages.
-        Casting a very wide net to ensure no skilled trade activity is missed.
+        Capped at 500 — the tag-based pass in refresh_markets covers the long tail.
         """
         all_events: List[Dict[str, Any]] = []
         page_size = 50
@@ -90,10 +90,10 @@ class GammaClient:
             offset += page_size
         return all_events[:max_events]
 
-    async def get_events_by_tag(self, tag_id: int, max_events: int = 2000) -> List[Dict[str, Any]]:
+    async def get_events_by_tag(self, tag_id: int, max_events: int = 100) -> List[Dict[str, Any]]:
         """
         Fetch active events filtered by Polymarket tag ID.
-        Supports up to 2000 events per tag for exhaustive coverage.
+        Capped at 100 per tag — priority tags cover the most relevant markets.
         """
         all_events: List[Dict[str, Any]] = []
         page_size = 50

@@ -1,9 +1,10 @@
 import asyncio
 import logging
+import time
 from typing import Dict, Any
 
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi_socketio import SocketManager
@@ -17,6 +18,7 @@ from packages.tasks.refresh_markets import refresh_markets
 from packages.tasks.refresh_trades import refresh_trades
 from packages.tasks.recompute_features import refresh_trader_profiles
 from packages.tasks.compute_signals import refresh_market_signals
+from packages.tasks.execute_signals import execute_signals
 
 logger = logging.getLogger("polymarket_alpha_ui")
 
@@ -32,6 +34,14 @@ is_trading = False
 is_syncing = False
 bot_state: Dict[str, Any] = {}
 db_lock = asyncio.Lock()
+
+# How often each layer runs:
+#   SIGNAL_CYCLE  — recompute scores on cached DB markets (no API). Fast, runs often.
+#   TRADE_CYCLE   — refresh trade history + positions from CLOB (only when trading).
+#   MARKET_CYCLE  — fetch new markets from Polymarket API (heavy, runs infrequently).
+SIGNAL_CYCLE_SECONDS = 30          # process cached markets every 30 s
+TRADE_CYCLE_SECONDS  = 60          # refresh positions every 60 s while trading
+MARKET_CYCLE_MIN     = 30          # minimum minutes between market API fetches
 
 async def update_state_loop():
     """Periodically refresh the bot state from the database and broadcast via SocketIO."""
@@ -50,64 +60,107 @@ async def update_state_loop():
 # Global sync trigger to wake up background worker on config change
 _force_sync_event = asyncio.Event()
 
+# Track which strategy markets were last fetched for (to detect strategy changes)
+_last_fetched_strategy: str = ""
+_last_market_fetch_time: float = 0.0
+
+
 async def background_workers_loop():
-    """Run all background data and quants tasks in a loop."""
+    """
+    Three-layer background engine (memory-efficient, nothing missed):
+
+      Layer 1 — Signal cycle (every 30 s):
+        Re-score all cached markets already in the DB. No Polymarket API calls.
+        Keeps Alpha Scan current at all times regardless of bot state.
+
+      Layer 2 — Trade/Position cycle (every 60 s, only when bot is running):
+        Refresh trade history and re-compute trader profiles from CLOB.
+        Positions stay in sync with live market data while trading.
+
+      Layer 3 — Market fetch cycle (every scan_interval min, min 30):
+        Pull new markets from Polymarket Gamma API for the active strategy.
+        Heavy — runs infrequently to save memory and bandwidth.
+        Triggered immediately on strategy change or force-sync from UI.
+    """
+    global is_syncing, _last_fetched_strategy, _last_market_fetch_time
     logger.info("Starting background worker loop...")
-    
-    # First-run check: if DB is empty, run a market sync immediately
+
+    # Track last trade refresh separately
+    last_trade_refresh: float = 0.0
+
+    # First-run: if DB is empty, fetch markets before the first signal cycle
     try:
         async with AsyncSessionLocal() as session:
             from sqlalchemy import func as sqlfunc
             count_stmt = select(sqlfunc.count(Market.id))
             market_count = (await session.execute(count_stmt)).scalar() or 0
             if market_count == 0:
-                logger.info("Database empty on startup. Triggering initial market sync...")
-                await refresh_markets(session)
-                await refresh_market_signals(session)
+                logger.info("DB empty — running initial market sync before first signal cycle...")
+                async with db_lock:
+                    await refresh_markets(session)
+                    await refresh_market_signals(session)
+                _last_fetched_strategy = settings.strategy
+                _last_market_fetch_time = time.monotonic()
+                last_trade_refresh = time.monotonic()
     except Exception as e:
         logger.error(f"Startup sync failed: {e}")
 
     while True:
         try:
-            # Check for a force-sync trigger (e.g. strategy change from UI)
             has_force_sync = _force_sync_event.is_set()
             _force_sync_event.clear()
 
-            global is_syncing
+            now              = time.monotonic()
+            current_strategy = settings.strategy
+            strategy_changed = current_strategy != _last_fetched_strategy
+            market_interval  = max(MARKET_CYCLE_MIN, settings.app.scan_interval) * 60
+            market_due       = (now - _last_market_fetch_time) >= market_interval
+            trade_due        = is_trading and (now - last_trade_refresh) >= TRADE_CYCLE_SECONDS
+
             is_syncing = True
-            logger.info(f"--- Sync Cycle Starting (trading={is_trading}, force={has_force_sync}) ---")
 
             async with db_lock:
                 async with AsyncSessionLocal() as session:
-                    # 1. Market + price refresh — always runs so Alpha Scan stays current
-                    #    regardless of whether the bot is started or stopped.
-                    await refresh_markets(session)
 
-                    # 2. Trade / profile refresh — only when bot is active or a
-                    #    strategy change was triggered (heavy; not needed in idle mode).
-                    if is_trading and not has_force_sync:
+                    # ── Layer 3: Heavy market fetch ──────────────────────────────
+                    if strategy_changed or has_force_sync or market_due:
+                        reason = ("strategy change" if strategy_changed
+                                  else "force sync"  if has_force_sync
+                                  else "scheduled interval")
+                        logger.info(f"[Market Fetch] Starting ({reason})...")
+                        await refresh_markets(session)
+                        _last_fetched_strategy = current_strategy
+                        _last_market_fetch_time = time.monotonic()
+                        logger.info("[Market Fetch] Done.")
+
+                    # ── Layer 2: Trade / position refresh ────────────────────────
+                    if trade_due or (has_force_sync and is_trading):
+                        logger.info("[Trade Refresh] Updating positions...")
                         await refresh_trades(session)
                         await refresh_trader_profiles(session)
-                    elif has_force_sync:
-                        logger.info("Strategy change: high-priority signal refresh.")
+                        last_trade_refresh = time.monotonic()
+                        logger.info("[Trade Refresh] Done.")
 
-                    # 3. Alpha Signal Generation — always runs so scores are live
-                    #    in both start and stop mode.
+                    # ── Layer 1: Signal recompute on cached markets ───────────────
+                    logger.info(f"[Signal Cycle] Scoring cached markets (strategy={current_strategy})...")
                     await refresh_market_signals(session)
-                
-            logger.info("--- Sync Cycle Complete ---")
+                    logger.info("[Signal Cycle] Done.")
+
+                    # ── Layer 0: Execute trades on top signals ────────────────────
+                    if is_trading:
+                        await execute_signals(session)
+
             is_syncing = False
-            
+
         except Exception as e:
             is_syncing = False
-            logger.error(f"Error in background sync: {e}")
+            logger.error(f"Background sync error: {e}")
             import traceback
             logger.error(traceback.format_exc())
-            
-        # Wait for the interval OR a force-sync (e.g. strategy change)
-        scan_seconds = max(30, settings.app.scan_interval * 60)
+
+        # Sleep until next 30-second signal cycle, or wake immediately on force-sync
         try:
-            await asyncio.wait_for(_force_sync_event.wait(), timeout=scan_seconds)
+            await asyncio.wait_for(_force_sync_event.wait(), timeout=SIGNAL_CYCLE_SECONDS)
         except asyncio.TimeoutError:
             pass
 
@@ -200,12 +253,29 @@ async def update_config(request: Request):
         old_strategy = settings.strategy
         new_strategy = str(data["strategy"])
         if old_strategy != new_strategy:
-            logger.info(f"Strategy changed from {old_strategy} to {new_strategy}. Triggering sync...")
+            logger.info(f"Strategy changed from {old_strategy} to {new_strategy}. Triggering market re-fetch...")
             settings.strategy = new_strategy
+            # Reset the last-fetched marker so the background loop treats this as a strategy change
+            global _last_fetched_strategy
+            _last_fetched_strategy = ""
             _force_sync_event.set()
 
     logger.info(f"Settings updated: {current}")
     return {"status": "saved", "settings": current}
+
+
+@app.get("/api/config")
+async def get_config():
+    """Return current settings so the frontend can populate the form on page load."""
+    return JSONResponse({
+        "paper_mode":    settings.app.paper_mode,
+        "trade_amount":  settings.app.trade_amount,
+        "min_edge":      settings.app.min_edge,
+        "scan_interval": settings.app.scan_interval,
+        "strategy":      settings.strategy,
+        "paper_balance": settings.app.paper_balance,
+        "max_trades":    settings.app.max_trades,
+    })
 
 
 

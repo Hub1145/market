@@ -1,8 +1,6 @@
 import logging
 import traceback
 from datetime import datetime, timedelta
-from typing import List
-
 from sqlalchemy import select, func as sqlfunc
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -28,9 +26,6 @@ class MarketService:
         logger.info(f"Refreshing up to {limit} active events from Gamma...")
         try:
             raw_events = await self.gamma_client.get_events_paginated(max_events=limit)
-
-            # Collect all price data from all events in one pass
-            all_price_data: List[dict] = []
 
             batch_size = 50
             # Track (market_id, tag) pairs added in this session to avoid
@@ -82,55 +77,40 @@ class MarketService:
                         self.session.add(tag)
                     seen_tags.add(tag_key)
 
-                all_price_data.extend(price_data)
+                # Write price snapshots for this batch immediately — don't
+                # accumulate all_price_data across the whole run (avoids holding
+                # tens of thousands of dicts in memory simultaneously).
+                now = datetime.utcnow()
+                for pd_row in price_data:
+                    outcome_row = (
+                        await self.session.execute(
+                            select(Outcome)
+                            .where(Outcome.market_id == pd_row["market_id"])
+                            .where(Outcome.name == pd_row["outcome_name"])
+                            .limit(1)
+                        )
+                    ).scalar_one_or_none()
+                    if outcome_row is None:
+                        continue
+                    price_val = pd_row["price"]
+                    self.session.add(PriceSnapshot(
+                        market_id=pd_row["market_id"],
+                        outcome_id=outcome_row.id,
+                        best_bid=max(0.0, price_val - 0.01),
+                        best_ask=min(1.0, price_val + 0.01),
+                        mid_price=price_val,
+                        timestamp=now,
+                    ))
 
-                # Commit every batch for immediate UI feedback
+                # Commit every batch and release memory
                 if (i + 1) % batch_size == 0:
                     await self.session.commit()
-                    # Clear seen set after commit — committed rows are now in DB
-                    # and will be found by the select() check in the next batch.
                     seen_tags.clear()
                     logger.debug(f"Committed batch of {batch_size} events.")
 
-            # Final commit for the remaining events
+            # Final commit for the tail
             await self.session.commit()
-
-
-            # ---------------------------------------------------------- #
-            # Store latest outcome prices as PriceSnapshots.              #
-            # These feed CLV computation and the fallback signal scanner. #
-            # ---------------------------------------------------------- #
-            now = datetime.utcnow()
-            price_count = 0
-            for pd_row in all_price_data:
-                outcome_row = (
-                    await self.session.execute(
-                        select(Outcome)
-                        .where(Outcome.market_id == pd_row["market_id"])
-                        .where(Outcome.name == pd_row["outcome_name"])
-                        .limit(1)
-                    )
-                ).scalar_one_or_none()
-
-                if outcome_row is None:
-                    continue
-
-                price_val = pd_row["price"]
-                snap = PriceSnapshot(
-                    market_id=pd_row["market_id"],
-                    outcome_id=outcome_row.id,
-                    best_bid=max(0.0, price_val - 0.01),
-                    best_ask=min(1.0, price_val + 0.01),
-                    mid_price=price_val,
-                    timestamp=now,
-                )
-                self.session.add(snap)
-                price_count += 1
-
-            await self.session.commit()
-            logger.info(
-                f"Refreshed {len(raw_events)} events, stored {price_count} price snapshots."
-            )
+            logger.info(f"Refreshed {len(raw_events)} events with price snapshots.")
 
         except Exception as e:
             await self.session.rollback()

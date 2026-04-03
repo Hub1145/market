@@ -244,6 +244,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Load settings immediately on page load (don't wait for WebSocket)
+    fetch('/api/config')
+        .then(res => res.json())
+        .then(cfg => {
+            const inputs = {
+                's-mode':       cfg.paper_mode.toString(),
+                's-strategy':   cfg.strategy,
+                's-amount':     cfg.trade_amount,
+                's-edge':       cfg.min_edge,
+                's-interval':   cfg.scan_interval,
+                's-balance':    cfg.paper_balance,
+                's-max-trades': cfg.max_trades,
+            };
+            for (const [id, val] of Object.entries(inputs)) {
+                const el = document.getElementById(id);
+                if (el) el.value = val;
+            }
+        })
+        .catch(() => {}); // silent fail — WebSocket will populate later
+
     // Request initial update
     socket.emit('request_update');
 });
